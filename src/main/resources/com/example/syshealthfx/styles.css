@@ -1,0 +1,87 @@
+.login-container{
+    -fx-effect:  dropshadow(gaussian, rgb(31, 71, 87), 5, 1, 8, 14);
+}
+.button-login{
+    -fx-background-color: #1B082E;
+    -fx-text-fill: white;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
+
+}
+.button-salir{
+
+    -fx-background-radius: 50%;
+    -fx-background-color: white;
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-border-radius: 50%;
+    -fx-padding: 15px 15px;
+}
+.button-login:hover{
+    -fx-background-color: white;
+    -fx-border-color: #1B082E;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15px;
+    -fx-text-fill: black;
+    -fx-background-radius: 15px;
+}
+.txt-login{
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-background-color: white;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+}
+.txt-login:focus{
+    -fx-border-color: red;
+}
+.vbox-buttons{
+    -fx-background-color: white;
+    -fx-font-family: 'Cascadia Code', Arial, sans-serif;
+
+}
+.vbox-buttons > Label{
+    -fx-font-size: 15px;
+}
+.vbox-buttons > VBox{
+    -fx-padding: 0px 15px
+}
+.vbox-buttons > VBox > Button{
+    -fx-background-color: transparent;
+    -fx-padding: 5px 15px;
+    -fx-width: 215px;
+    -fx-cursor: hand;
+    -fx-alignment: left;
+    -fx-background-radius: 12px;
+}
+.btn-aside:hover{
+    -fx-background-color: #D4F1F4;
+}
+.btn-aside-cerrar:hover{
+    -fx-text-fill: white;
+    -fx-background-color: red;
+}
+.pane-index{
+    -fx-background-color: white;
+    -fx-background-radius: 0px 0px 15px 15px;
+    -fx-padding-top: 15px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+.panel-acceso-container{
+    -fx-padding: 100px 200px;
+}
+.panel-acceso{
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+    -fx-cursor: hand;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+.panel-acceso > Label{
+    -fx-font-family: 'Cascadia Code', Arial, sans-serif;
+    -fx-font-size: 16px;
+    -fx-padding: 8px;
+}
+.panel-acceso:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
