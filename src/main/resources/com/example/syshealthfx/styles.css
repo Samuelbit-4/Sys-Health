@@ -85,3 +85,11 @@
 .panel-acceso:hover{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
+.table-design {
+     -fx-base: #1d1d1d;
+     -fx-control-inner-background: #1d1d1d;
+     -fx-background-color: white;
+     -fx-table-cell-border-color: black;
+     -fx-table-header-border-color: black;
+     -fx-padding: 5;
+}

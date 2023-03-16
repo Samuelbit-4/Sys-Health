@@ -14,6 +14,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 650);
         stage.setTitle("SYS-HEALTH 1.0");
+        stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
     }
