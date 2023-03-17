@@ -21,28 +21,6 @@ public class HelloController {
     @FXML
     protected void onHelloButtonClick() throws IOException {
 
-        Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.setTitle("ADMINISTRADOR");
-        stage.show();
 
-        Stage old = (Stage) ingresar.getScene().getWindow();
-
-        old.close();
-        SQLClass bd = new SQLClass("root", "", "sys_health_prueba");
-        bd.connect();
-        try {
-           ResultSet rs = bd.executeQuery("SELECT * FROM paciente");
-           ResultSetMetaData rsmt = rs.getMetaData();
-           int columns = rsmt.getColumnCount();
-            System.out.println("COLUMNAS" + columns);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        bd.disconnect();
     }
 }

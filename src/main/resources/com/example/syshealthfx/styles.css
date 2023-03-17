@@ -8,6 +8,9 @@
     -fx-cursor: hand;
 
 }
+AnchorPane > VBox > Label{
+    -fx-font-family: 'Cascadia Code', Arial, sans-serif;
+}
 .button-salir{
 
     -fx-background-radius: 50%;

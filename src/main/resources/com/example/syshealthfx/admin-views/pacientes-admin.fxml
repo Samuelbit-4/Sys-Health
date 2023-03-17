@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1280.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="650.0" prefWidth="215.0" styleClass="vbox-buttons">
          <children>
@@ -54,7 +54,7 @@
                      <children>
                         <ImageView fitHeight="62.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/agregar-archivo.png" />
+                              <Image url="@../assets/agregar-archivo.png" />
                            </image>
                         </ImageView>
                         <Label prefHeight="35.0" prefWidth="121.0" text="NUEVA CITA" />
@@ -64,7 +64,7 @@
                      <children>
                         <ImageView fitHeight="62.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/editar.png" />
+                              <Image url="@../assets/editar.png" />
                            </image>
                         </ImageView>
                         <Label prefHeight="35.0" prefWidth="158.0" text="MODIFICAR CITA" />

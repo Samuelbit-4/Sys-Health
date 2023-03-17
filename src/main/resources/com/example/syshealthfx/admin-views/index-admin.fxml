@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1280.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="650.0" prefWidth="215.0" styleClass="vbox-buttons">
          <children>
@@ -65,7 +66,7 @@
                      <children>
                         <ImageView fitHeight="111.0" fitWidth="100.0">
                            <image>
-                              <Image url="@assets/registro-en-linea.png" />
+                              <Image url="@../assets/registro-en-linea.png" />
                            </image>
                         </ImageView>
                         <Label alignment="BASELINE_CENTER" contentDisplay="CENTER" prefHeight="181.0" prefWidth="513.0" text="REGISTRAR USUARIO">
@@ -79,7 +80,7 @@
                      <children>
                         <ImageView fitHeight="76.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/edificio-del-hospital.png" />
+                              <Image url="@../assets/edificio-del-hospital.png" />
                            </image>
                         </ImageView>
                         <Label prefHeight="119.0" prefWidth="205.0" text="ASIGNAR DEPARTAMENTO">
@@ -93,7 +94,7 @@
                      <children>
                         <ImageView fitHeight="117.0" fitWidth="97.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/doctor.png" />
+                              <Image url="@../assets/doctor.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="199.0" text="BUSCAR MÉDICO" />
@@ -103,7 +104,7 @@
                      <children>
                         <ImageView fitHeight="97.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/examen.png" />
+                              <Image url="@../assets/examen.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" prefHeight="35.0" prefWidth="199.0" text="BUSCAR PACIENTE" />
@@ -117,4 +118,8 @@
          </padding>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@styles.css" />
+      <URL value="@../styles.css" />
+   </stylesheets>
 </AnchorPane>

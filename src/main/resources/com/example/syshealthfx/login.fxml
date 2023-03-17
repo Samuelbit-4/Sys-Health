@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="620.0" prefWidth="1220.0" style="-fx-background-color: #62CDFF;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.syshealthfx.HelloController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="620.0" prefWidth="1220.0" style="-fx-background-color: #62CDFF;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.syshealthfx.LoginController">
    <children>
       <VBox layoutX="445.0" layoutY="110.0" prefHeight="400.0" prefWidth="330.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 25px;" styleClass="login-container" stylesheets="@./styles.css">
          <children>
@@ -24,7 +24,7 @@
                   <Font name="Cascadia Code Regular" size="16.0" />
                </font>
             </Label>
-            <TextField prefHeight="35.0" prefWidth="270.0" styleClass="txt-login">
+            <TextField fx:id="txtUsuario" prefHeight="35.0" prefWidth="270.0" styleClass="txt-login">
                <font>
                   <Font name="Cascadia Code Regular" size="15.0" />
                </font>
@@ -34,12 +34,12 @@
                   <Font name="Cascadia Code Regular" size="16.0" />
                </font>
             </Label>
-            <PasswordField styleClass="txt-login">
+            <PasswordField fx:id="txtPassword" styleClass="txt-login">
                <font>
                   <Font name="Cascadia Code Regular" size="15.0" />
                </font>
             </PasswordField>
-            <Button fx:id="ingresar" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="51.0" prefWidth="270.0" styleClass="button-login" text="INGRESAR">
+            <Button fx:id="acceder" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#initialize" prefHeight="51.0" prefWidth="270.0" styleClass="button-login" text="INGRESAR">
                <font>
                   <Font name="Cascadia Code Regular" size="15.0" />
                </font>
