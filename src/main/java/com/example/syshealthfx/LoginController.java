@@ -46,7 +46,7 @@ public class LoginController {
                 SQLClass conexion = new SQLClass("root", "", "sys_health");
                 conexion.connect();
                 try {
-                    ResultSet rs = conexion.executeQuery("SELECT usuario, pass FROM usuarios WHERE usuario='" + usuario + "' AND pass=PASSWORD('" + password + "')");
+                    ResultSet rs = conexion.executeQuery("SELECT usuario, pass FROM usuarios WHERE usuario='" + usuario + "' AND pass=PASSWORD('" + password + "');");
                     if (rs.next()) {
                         // El usuario y la contraseña son válidos
                         System.out.println("SI!");
@@ -59,13 +59,14 @@ public class LoginController {
                         if(result == ButtonType.OK){
                             Stage stage = new Stage();
                             try {
-                                Parent root = FXMLLoader.load(getClass().getResource("admin-views/index-admin.fxml"));
+                                Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
                                 Scene scene = new Scene(root);
                                 stage.setMaximized(true);
                                 stage.setScene(scene);
                                 stage.show();
                                 // Ocultar la ventana actual
                                 ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+                                conexion.disconnect();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -73,7 +74,7 @@ public class LoginController {
                             Stage stage = new Stage();
                             Parent root = null;
                             try {
-                                root = FXMLLoader.load(getClass().getResource("admin-views/index-admin.fxml"));
+                                root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -83,6 +84,7 @@ public class LoginController {
                             stage.show();
                             // Ocultar la ventana actual
                             ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+                            conexion.disconnect();
                         }
 
                     } else {

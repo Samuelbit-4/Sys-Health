@@ -17,7 +17,7 @@ public class SQLClass {
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://" + this.host + "/" + this.database;
             this.conn = DriverManager.getConnection(url, this.username, this.password);
-            System.out.println("CONEXIÓN EXITOSA\nBASE DE DATOS:"+this.database);
+            System.out.println("CONEXIÓN EXITOSA\nBASE DE DATOS: "+this.database);
         } catch (SQLException | ClassNotFoundException e){
             System.out.println("ERROR: " + e.getMessage());
         }
