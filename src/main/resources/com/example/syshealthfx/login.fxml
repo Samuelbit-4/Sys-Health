@@ -16,10 +16,10 @@
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="282.0" text="SYS-HEALTH">
                <font>
-                  <Font name="Cascadia Code Regular" size="26.0" />
+                  <Font name="Bell MT" size="26.0" />
                </font>
             </Label>
-            <Label prefHeight="41.0" prefWidth="66.0" text="USUARIO">
+            <Label prefHeight="41.0" prefWidth="134.0" text="USUARIO">
                <font>
                   <Font name="Cascadia Code Regular" size="16.0" />
                </font>
@@ -29,7 +29,7 @@
                   <Font name="Cascadia Code Regular" size="15.0" />
                </font>
             </TextField>
-            <Label prefHeight="27.0" prefWidth="94.0" text="CONTRASEÑA">
+            <Label prefHeight="27.0" prefWidth="146.0" text="CONTRASEÑA">
                <font>
                   <Font name="Cascadia Code Regular" size="16.0" />
                </font>

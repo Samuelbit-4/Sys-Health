@@ -55,29 +55,9 @@ public class LoginController {
                         alert.setHeaderText(null);
                         alert.setContentText("ACCESO CONCEDIDO");
                         alert.showAndWait();
-                        result = alert.getResult();
-                        if(result == ButtonType.OK){
-                            Stage stage = new Stage();
-                            try {
-                                Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
-                                Scene scene = new Scene(root);
-                                stage.setMaximized(true);
-                                stage.setScene(scene);
-                                stage.show();
-                                // Ocultar la ventana actual
-                                ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-                                conexion.disconnect();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        } else{
-                            Stage stage = new Stage();
-                            Parent root = null;
-                            try {
-                                root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                        Stage stage = new Stage();
+                        try {
+                            Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
                             Scene scene = new Scene(root);
                             stage.setMaximized(true);
                             stage.setScene(scene);
@@ -85,8 +65,9 @@ public class LoginController {
                             // Ocultar la ventana actual
                             ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
                             conexion.disconnect();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
-
                     } else {
                         // El usuario y/o la contraseña son incorrectos
                         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -94,14 +75,9 @@ public class LoginController {
                         alert.setHeaderText(null);
                         alert.setContentText("USUARIO NO ENCONTRADO \nVERIFICA TU USUARIO O CONTRASEÑA");
                         alert.showAndWait();
-                        result = alert.getResult();
-                        if(result == ButtonType.OK){
-                            txtUsuario.setText(null);
-                            txtPassword.setText(null);
-                        } else{
-                            txtUsuario.setText(null);
-                            txtPassword.setText(null);
-                        }
+                        txtUsuario.setText(null);
+                        txtPassword.setText(null);
+
                     }
                 } catch (SQLException e) {
                     // Error al ejecutar la consulta SQL

@@ -1,19 +1,19 @@
 package com.example.syshealthfx.admincontrollers;
 
 public class Usuarios {
-    private int id;
+    private long id;
     private String usuario;
     private String password;
-public Usuarios(int id, String usuario, String password){
+public Usuarios(long id, String usuario, String password){
     this.id = id;
     this.usuario = usuario;
     this.password = password;
 }
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -31,5 +31,14 @@ public Usuarios(int id, String usuario, String password){
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuarios{" +
+                "id=" + id +
+                ", usuario='" + usuario + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

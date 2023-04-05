@@ -53,7 +53,7 @@ AnchorPane > VBox > Label{
     -fx-padding: 5px 15px;
     -fx-width: 215px;
     -fx-cursor: hand;
-    -fx-alignment: left;
+    -fx-alignment: baseline_left;
     -fx-background-radius: 12px;
 }
 .btn-aside:hover{
@@ -95,4 +95,99 @@ AnchorPane > VBox > Label{
      -fx-table-cell-border-color: black;
      -fx-table-header-border-color: black;
      -fx-padding: 5;
+}
+.header{
+    -fx-min-width: 800px;
+    -fx-font-size: 30px;
+    -fx-alignment: center;
+   -fx-background-color: white;
+   -fx-padding: 20px;
+       -fx-background-radius: 0px 0px 15px 15px;
+       -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+.contenido-usuarios{
+    -fx-alignment: baseline_center;
+    -fx-min-width: 1069px;
+    -fx-min-height: 650px;
+    -fx-padding: 0px 15px;
+}
+.tablas{
+    -fx-alignment: baseline_center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 0);
+}
+.label-column:last-child{
+    -fx-min-width: 300px;
+}
+
+.modificar{
+    -fx-background-color: #6C875F;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-margin-right: 30px;
+}
+.eliminar{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-margin: 10px;
+}
+.buttons-data{
+      -fx-background-color: #dcdcdc;
+      -fx-border-color: transparent transparent #cacaca transparent;
+              -fx-border-width: 0 0 2 0;
+
+}
+.pass{
+    -fx-min-width: 350px;
+    -fx-font-weight: bold;
+        -fx-font-size: 14px;
+        -fx-padding: 10px;
+        -fx-background-color: #3B5A2C;
+        -fx-border-color: transparent transparent black transparent;
+        -fx-border-width: 0 0 2 0;
+        -fx-text-fill: white;
+        -fx-alignment: center;
+}
+.pass-data{
+-fx-min-width: 350px;
+-fx-font-weight: bold;
+  -fx-font-size: 14px;
+  -fx-padding: 10px;
+  -fx-background-color: #dcdcdc;
+-fx-border-color: transparent transparent #cacaca transparent;
+        -fx-border-width: 0 0 2 0;
+}
+.modificar:hover{
+    -fx-background-color: black;
+}
+.eliminar:hover{
+    -fx-background-color: red;
+}
+.tablas .label-column{
+    -fx-min-width: 200px;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-background-color: #3B5A2C;
+    -fx-border-color: transparent transparent black transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.tablas .label-data{
+-fx-min-width: 200px;
+-fx-font-weight: bold;
+  -fx-font-size: 14px;
+  -fx-padding: 10px;
+  -fx-background-color: #dcdcdc;
+-fx-border-color: transparent transparent #cacaca transparent;
+        -fx-border-width: 0 0 2 0;
+}
+.label-data:odd{
+    -fx-background-color: #e6e6e6;
 }
