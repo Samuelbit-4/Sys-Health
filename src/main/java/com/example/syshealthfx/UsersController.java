@@ -1,41 +1,45 @@
 package com.example.syshealthfx;
 
-import com.example.syshealthfx.SQLClass;
+
 import com.example.syshealthfx.admincontrollers.Usuarios;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.ResourceBundle;
 
 
 public class UsersController implements Initializable {
-    @FXML
-    private TableView<Usuarios> tablaUsuarios;
+
     @FXML
     private AnchorPane frameAdmin;
     @FXML
     private Button usuario;
     @FXML
-    private HBox contenidoHBox;
+    private HBox contenidoHBox, buttonModificar;
     @FXML
     private VBox contenidoInicio, contenidoUsuarios, buttonsMenu;
 
@@ -49,8 +53,11 @@ public class UsersController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 removerElementos();
                 System.out.println(actionEvent.getSource());
+
             }
         });
+
+
     }
     public void removerElementos(){
         HBox hbox = (HBox) frameAdmin.lookup("#contenidoHBox");
@@ -63,13 +70,32 @@ public class UsersController implements Initializable {
             contenidoUsuarios = new VBox();
             contenidoUsuarios.setId("contenidoUsuarios");
             contenidoUsuarios.getStyleClass().add("contenido-usuarios");
+
             HBox hboxHeader = new HBox();
+            HBox hboxContainerButtons = new HBox();
+            hboxContainerButtons.setAlignment(Pos.TOP_LEFT);
+            HBox hboxButton = new HBox();
+            hboxContainerButtons.getChildren().add(hboxButton);
+
+            hboxContainerButtons.setStyle("-fx-padding: 20px 0px 10px 0px");
+            String imagepath = getClass().getResource("assets/editar.png").toExternalForm();
+            Image image = new Image(imagepath);
+            ImageView imagev = new ImageView(image);
+            imagev.setFitHeight(62);
+            imagev.setFitWidth(81);
+            Label labelModificar = new Label("AGREGAR USUARIO");
+            hboxButton.getStyleClass().add("botones-varios");
+            hboxButton.setId("btnModificar");
+
+            hboxButton.getChildren().addAll(imagev, labelModificar);
+
             hboxHeader.getStyleClass().add("header");
             Label labelTitulo = new Label();
             labelTitulo.setText("USUARIOS");
             hboxHeader.getChildren().add(labelTitulo);
             contenidoHBox.getChildren().add(contenidoUsuarios);
             contenidoUsuarios.getChildren().add(hboxHeader);
+            contenidoUsuarios.getChildren().add(hboxContainerButtons);
 
            try{
                conexion = new SQLClass("root", "", "sys_health");
@@ -126,20 +152,28 @@ public class UsersController implements Initializable {
 
                    filaActual++;
 
-
                }
                conexion.disconnect();
                contenidoUsuarios.getChildren().add(tabla);
+               hboxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                   @Override
+                   public void handle(MouseEvent mouseEvent) {
+                       FXMLLoader loader = new FXMLLoader(getClass().getResource("registro-usuario.fxml"));
+                       try {
+                           Parent root = loader.load();
+                           Scene scene = new Scene(root);
+                           Stage stage = new Stage();
+                           stage.setScene(scene);
+                           stage.show();
+                       } catch (IOException e) {
+                           System.out.println("Error al cargar el archivo fxml: " + e.getMessage());
+                       }
+                   }
+               });
            } catch (SQLException e){
                throw new RuntimeException(e);
            }
-
-
-
         }
-
-
-
     }
 }
 

@@ -106,10 +106,26 @@ AnchorPane > VBox > Label{
        -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 .contenido-usuarios{
+    -fx-overflow: scroll;
     -fx-alignment: baseline_center;
     -fx-min-width: 1069px;
     -fx-min-height: 650px;
     -fx-padding: 0px 15px;
+}
+.botones-varios{
+    -fx-max-width: 215px;
+    -fx-max-height: 91px;
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+    -fx-cursor: hand;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+
+}
+.botones-varios:hover{
+-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+
 }
 .tablas{
     -fx-alignment: baseline_center;
@@ -162,7 +178,7 @@ AnchorPane > VBox > Label{
         -fx-border-width: 0 0 2 0;
 }
 .modificar:hover{
-    -fx-background-color: black;
+    -fx-background-color: brown;
 }
 .eliminar:hover{
     -fx-background-color: red;
@@ -190,4 +206,36 @@ AnchorPane > VBox > Label{
 }
 .label-data:odd{
     -fx-background-color: #e6e6e6;
+}
+
+/*ESTILOS DE FORMULARIOS*/
+
+.formulario1 .titulo{
+    -fx-text-fill: white;
+}
+.formulario1 Label{
+    -fx-text-fill: #052A97;
+    -fx-padding: 5px 0px;
+    -fx-font-weight: bold;
+}
+.formulario1 TextField, DatePicker{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+}
+.formulario1 RadioButton{
+    -fx-text-fill: #052A97;
+    -fx-font-weight: bold;
+}
+.formulario1 Button{
+    -fx-background-color: #052A97;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-cursor: hand;
+}
+.formulario1 Button:hover{
+    -fx-background-color: #79FFF5;
+    -fx-text-fill: black;
 }
