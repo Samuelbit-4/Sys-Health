@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -60,6 +61,8 @@ public class LoginController {
                             Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
                             Scene scene = new Scene(root);
                             stage.setMaximized(true);
+                            Image imagenIcono = new Image(getClass().getResourceAsStream("assets/hospital-logo.png"));
+                            stage.getIcons().add(imagenIcono);
                             stage.setScene(scene);
                             stage.show();
                             // Ocultar la ventana actual

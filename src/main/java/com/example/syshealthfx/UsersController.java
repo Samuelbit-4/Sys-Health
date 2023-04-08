@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -42,7 +43,7 @@ public class UsersController implements Initializable {
     private HBox contenidoHBox, buttonModificar;
     @FXML
     private VBox contenidoInicio, contenidoUsuarios, buttonsMenu;
-
+    private Stage stage;
     private SQLClass conexion;
     private Usuarios usuarios;
 
@@ -53,7 +54,6 @@ public class UsersController implements Initializable {
             public void handle(ActionEvent actionEvent) {
                 removerElementos();
                 System.out.println(actionEvent.getSource());
-
             }
         });
 
@@ -158,12 +158,18 @@ public class UsersController implements Initializable {
                hboxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                    @Override
                    public void handle(MouseEvent mouseEvent) {
-                       FXMLLoader loader = new FXMLLoader(getClass().getResource("registro-usuario.fxml"));
+                       Stage stage = new Stage();
                        try {
-                           Parent root = loader.load();
+                           Image imageIcon = new Image(getClass().getResourceAsStream("assets/doctor.png"));
+                           Parent root = FXMLLoader.load(getClass().getResource("registro-usuario.fxml"));
                            Scene scene = new Scene(root);
-                           Stage stage = new Stage();
+                           stage.setResizable(false);
+                           Stage ventanaAnterior = (Stage) hboxButton.getScene().getWindow();
+
+                           stage.getIcons().add(imageIcon);
+                           stage.setTitle("REGISTRO");
                            stage.setScene(scene);
+
                            stage.show();
                        } catch (IOException e) {
                            System.out.println("Error al cargar el archivo fxml: " + e.getMessage());
