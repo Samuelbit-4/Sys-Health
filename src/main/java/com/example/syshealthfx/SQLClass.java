@@ -38,4 +38,14 @@ public class SQLClass {
         ResultSet result = stmt.executeQuery(query);
         return result;
     }
+
+    public Statement statement() throws SQLException{
+        Statement stm = this.conn.createStatement();
+        return stm;
+    }
+    public PreparedStatement preparedStatement(String query) throws SQLException{
+        PreparedStatement pstmt = this.conn.prepareStatement(query);
+        return pstmt;
+    }
+
 }

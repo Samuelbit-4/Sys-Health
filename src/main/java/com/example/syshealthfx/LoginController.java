@@ -44,11 +44,14 @@ public class LoginController {
             public void handle(ActionEvent actionEvent) {
                 usuario = txtUsuario.getText();
                 password = txtPassword.getText();
-                SQLClass conexion = new SQLClass("root", "", "sys_health");
+                SesionUsuario.setUsuario(usuario);
+                SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
                 conexion.connect();
                 try {
-                    ResultSet rs = conexion.executeQuery("SELECT usuario, pass FROM usuarios WHERE usuario='" + usuario + "' AND pass=PASSWORD('" + password + "');");
+                    ResultSet rs = conexion.executeQuery("SELECT usuario, contrasena, rol FROM usuarios WHERE usuario='" + usuario + "' AND contrasena=PASSWORD('" + password +"');");
                     if (rs.next()) {
+
+
                         // El usuario y la contraseña son válidos
                         System.out.println("SI!");
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);

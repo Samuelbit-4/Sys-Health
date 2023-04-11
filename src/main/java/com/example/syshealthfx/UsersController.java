@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -43,15 +42,22 @@ public class UsersController implements Initializable {
     private HBox contenidoHBox, buttonModificar;
     @FXML
     private VBox contenidoInicio, contenidoUsuarios, buttonsMenu;
+    @FXML
+    private Label nombreInicio;
     private Stage stage;
     private SQLClass conexion;
     private Usuarios usuarios;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        System.out.println(SesionUsuario.getUsuario());
+
         usuario.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent actionEvent) {
+
                 removerElementos();
                 System.out.println(actionEvent.getSource());
             }
@@ -83,7 +89,7 @@ public class UsersController implements Initializable {
             ImageView imagev = new ImageView(image);
             imagev.setFitHeight(62);
             imagev.setFitWidth(81);
-            Label labelModificar = new Label("AGREGAR USUARIO");
+            Label labelModificar = new Label("REGISTRAR EMPLEADO");
             hboxButton.getStyleClass().add("botones-varios");
             hboxButton.setId("btnModificar");
 
@@ -98,40 +104,49 @@ public class UsersController implements Initializable {
             contenidoUsuarios.getChildren().add(hboxContainerButtons);
 
            try{
-               conexion = new SQLClass("root", "", "sys_health");
+               conexion = new SQLClass("root", "", "sys_health_prueba");
                conexion.connect();
-               ResultSet rs = conexion.executeQuery("SELECT * FROM usuarios");
+               ResultSet rs = conexion.executeQuery("SELECT u.id_usuario, e.nombre, e.apellido_paterno, e.apellido_materno, d.nombre_departamento, u.usuario\n" +
+                       "FROM usuarios u\n" +
+                       "JOIN empleados e ON u.id_empleado = e.id_empleado\n" +
+                       "JOIN departamentos d ON e.id_departamento = d.id_departamento\n");
                Label col1 = new Label();
                col1.setText("ID");
                col1.getStyleClass().add("label-column");
                Label col2 = new Label();
-               col2.setText("USUARIO");
+               col2.setText("NOMBRE COMPLETO");
                col2.getStyleClass().add("label-column");
                Label col3 = new Label();
-               col3.setText("CONTRASEÑA");
-               col3.getStyleClass().add("pass");
+               col3.setText("DEPARTAMENTO");
+               col3.getStyleClass().add("label-column");
                Label col4 = new Label();
+               col4.setText("USUARIO");
                col4.getStyleClass().add("label-column");
+               Label col5 = new Label();
+                col5.getStyleClass().add("label-column");
 
                GridPane tabla = new GridPane();
                tabla.add(col1, 0, 0);
                tabla.add(col2, 1, 0);
                tabla.add(col3, 2, 0);
                tabla.add(col4, 3, 0);
+               tabla.add(col5, 4, 0);
                tabla.getStyleClass().add("tablas");
 
                int filaActual = 1;
                while(rs.next()){
-                   long id = rs.getLong("id_usuario");
-                   String user = rs.getString("usuario");
-                   String password = rs.getString("pass");
-
+                   int idUsuario = rs.getInt("id_usuario");
+                   String nombreCompleto = rs.getString("nombre") + " " + rs.getString("apellido_paterno") +" "+ rs.getString("apellido_materno");
+                   String nombreDepartamento = rs.getString("nombre_departamento");
+                   String usuario = rs.getString("usuario");
                    Label dato1 = new Label();
                    dato1.getStyleClass().add("label-data");
                    Label dato2 = new Label();
                    dato2.getStyleClass().add("label-data");
                    Label dato3 = new Label();
-                   dato3.getStyleClass().add("pass-data");
+                   dato3.getStyleClass().add("label-data");
+                   Label dato4 = new Label();
+                   dato4.getStyleClass().add("label-data");
                    HBox buttons = new HBox();
                    buttons.setAlignment(Pos.CENTER);
                    buttons.getStyleClass().add("buttons-data");
@@ -141,14 +156,16 @@ public class UsersController implements Initializable {
                    Button btnEliminar = new Button("ELIMINAR");
                    btnEliminar.getStyleClass().add("eliminar");
                    buttons.getChildren().addAll(btnModificar, btnEliminar);
-                   dato1.setText(String.valueOf(id));
-                   dato2.setText(user);
-                   dato3.setText(password);
+                   dato1.setText(String.valueOf(idUsuario));
+                   dato2.setText(nombreCompleto);
+                   dato3.setText(nombreDepartamento);
+                   dato4.setText(usuario);
 
                    tabla.add(dato1, 0, filaActual);
                    tabla.add(dato2, 1, filaActual);
                    tabla.add(dato3, 2, filaActual);
-                   tabla.add(buttons, 3, filaActual);
+                   tabla.add(dato4, 3 , filaActual);
+                   tabla.add(buttons, 4, filaActual);
 
                    filaActual++;
 
@@ -167,7 +184,7 @@ public class UsersController implements Initializable {
                            Stage ventanaAnterior = (Stage) hboxButton.getScene().getWindow();
 
                            stage.getIcons().add(imageIcon);
-                           stage.setTitle("REGISTRO");
+                           stage.setTitle("REGISTRO DE EMPLEADOS");
                            stage.setScene(scene);
 
                            stage.show();

@@ -1,20 +1,40 @@
 package com.example.syshealthfx.admincontrollers;
 
 public class Usuarios {
-    private long id;
+    private int idUsuario;
+    private String nombreCompleto;
+    private String nombreDepartamento;
     private String usuario;
-    private String password;
-public Usuarios(long id, String usuario, String password){
-    this.id = id;
-    this.usuario = usuario;
-    this.password = password;
-}
-    public long getId() {
-        return id;
+
+    public Usuarios(int idUsuario, String nombreCompleto, String nombreDepartamento, String usuario) {
+        this.idUsuario = idUsuario;
+        this.nombreCompleto = nombreCompleto;
+        this.nombreDepartamento = nombreDepartamento;
+        this.usuario = usuario;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public String getNombreDepartamento() {
+        return nombreDepartamento;
+    }
+
+    public void setNombreDepartamento(String nombreDepartamento) {
+        this.nombreDepartamento = nombreDepartamento;
     }
 
     public String getUsuario() {
@@ -23,22 +43,5 @@ public Usuarios(long id, String usuario, String password){
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Usuarios{" +
-                "id=" + id +
-                ", usuario='" + usuario + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

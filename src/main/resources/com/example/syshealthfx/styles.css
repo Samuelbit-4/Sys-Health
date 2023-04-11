@@ -192,11 +192,12 @@ AnchorPane > VBox > Label{
     -fx-border-color: transparent transparent black transparent;
     -fx-border-width: 0 0 2 0;
     -fx-text-fill: white;
+    -fx-text-align: center;
     -fx-alignment: center;
 }
 
 .tablas .label-data{
--fx-min-width: 200px;
+-fx-max-width: 200px;
 -fx-font-weight: bold;
   -fx-font-size: 14px;
   -fx-padding: 10px;
@@ -218,10 +219,15 @@ AnchorPane > VBox > Label{
     -fx-padding: 5px 0px;
     -fx-font-weight: bold;
 }
-.formulario1 TextField, DatePicker{
-    -fx-border-color: black;
-    -fx-border-width: 1px;
+.formulario1 TextField, DatePicker, ComboBox{
+    -fx-border-color: #21618C;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px;
     -fx-background-color: white;
+}
+.formulario1 ComboBox{
+    -fx-font-weight: bold;
 }
 .formulario1 RadioButton{
     -fx-text-fill: #052A97;
@@ -229,6 +235,9 @@ AnchorPane > VBox > Label{
 }
 .formulario1 Button{
     -fx-background-color: #052A97;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 0;
