@@ -5,7 +5,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,128 +12,124 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="frame" prefHeight="534.0" prefWidth="721.0" styleClass="formulario1" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.syshealthfx.RegistroController">
+<VBox prefHeight="650.0" prefWidth="1069.0" styleClass="formulario1" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="534.0" prefWidth="721.0">
+      <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0" style="-fx-border-color: transparent transparent #cacaca transparent; -fx-border-width: 2px; -fx-background-color: #003FF6;">
          <children>
-            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="600.0" style="-fx-border-color: transparent transparent #cacaca transparent; -fx-border-width: 2px; -fx-background-color: #003FF6;">
+            <Label prefHeight="36.0" prefWidth="198.0" style="-fx-font-weight: bold;" styleClass="titulo" text="REGISTRAR EMPLEADO" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="73.0" prefWidth="619.0" spacing="10.0">
+         <children>
+            <Label text="SELECCIONAR ROL: " />
+            <HBox id="rbtnRol" prefHeight="29.0" prefWidth="341.0" />
+         </children>
+      </HBox>
+      <GridPane hgap="15.0" prefHeight="324.0" prefWidth="1069.0" style="-fx-padding: 10px;" vgap="15.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label prefHeight="36.0" prefWidth="198.0" style="-fx-font-weight: bold;" styleClass="titulo" text="REGISTRAR EMPLEADO" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
+                  <Label text="NOMBRE(S)" />
+                  <TextField id="txtNombre" fx:id="txtNombre" prefHeight="29.0" prefWidth="287.0" />
                </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="73.0" prefWidth="619.0" spacing="10.0">
-               <children>
-                  <Label text="SELECCIONAR ROL: " />
-                  <HBox id="rbtnRol" prefHeight="29.0" prefWidth="341.0" />
-               </children>
-            </HBox>
-            <GridPane hgap="15.0" prefHeight="297.0" prefWidth="699.0" style="-fx-padding: 10px;" vgap="15.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label text="NOMBRE(S)" />
-                        <TextField fx:id="txtNombre" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-                     <children>
-                        <Label text="APELLIDO PATERNO" />
-                        <TextField fx:id="txtApellidoA" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
-                     <children>
-                        <Label text="APELLIDO MATERNO" />
-                        <TextField fx:id="txtApellidoP" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
-                     <children>
-                        <Label id="rbntGenero" text="GENERO" />
-                        <HBox id="rbtnGenero" prefHeight="100.0" prefWidth="200.0" spacing="12.0" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Label text="FECHA DE NACIMIENTO" />
-                        <DatePicker fx:id="date" prefHeight="29.0" prefWidth="224.0" promptText="DD/MM/YYYY" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <children>
-                        <Label text="DOMICILIO" />
-                        <TextField fx:id="txtDomicilio" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
-                     <children>
-                        <Label text="CORREO ELECTRONICO" />
-                        <TextField fx:id="txtCorreo" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <children>
-                        <Label text="TELEFONO" />
-                        <TextField fx:id="txtTelefono" />
-                     </children>
-                  </VBox>
-                  <VBox id="vboxDepartamento" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                     <children>
-                        <Label text="DEPARTAMENTO" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
-                     <children>
-                        <Label text="CEDULA" />
-                        <TextField fx:id="txtCedula" />
-                     </children>
-                  </VBox>
-               </children>
-            </GridPane>
-            <VBox alignment="CENTER" prefHeight="139.0" prefWidth="619.0" spacing="10.0">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0" spacing="10.0">
-                     <children>
-                        <Label text="NOMBRE DE USUARIO: " />
-                        <TextField fx:id="txtUsuario" />
-                        <Button fx:id="generarUsuario" mnemonicParsing="false" onAction="#generarUsuario" style="-fx-border-width: 1px; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="GENERAR USUARIO" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="600.0" spacing="10.0">
-                     <children>
-                        <Label text="CONTRASEÑA:" />
-                        <TextField fx:id="txtPassword" />
-                        <Button fx:id="generarPassword" mnemonicParsing="false" onAction="#generarPass" text="GENERAR CONTRASEÑA" />
-                     </children>
-                  </HBox>
-               </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" top="10.0" />
-               </padding>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="63.0" prefWidth="600.0" spacing="10.0">
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
-                  <Button mnemonicParsing="false" onAction="#subirUsuario" text="CREAR USUARIO" />
-                  <Button fx:id="vaciar" mnemonicParsing="false" onAction="#vaciarFormulario" text="VACIAR" />
-                  <Button mnemonicParsing="false" onAction="#cerrarVentana" text="CANCELAR" />
+                  <Label text="APELLIDO PATERNO" />
+                  <TextField id="txtApellidoP" fx:id="txtApellidoP" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
+               <children>
+                  <Label text="APELLIDO MATERNO" />
+                  <TextField id="txtApellidoM" fx:id="txtApellidoM" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
+               <children>
+                  <Label id="rbntGenero" text="GENERO" />
+                  <HBox id="rbtnGenero" prefHeight="100.0" prefWidth="200.0" spacing="12.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label text="FECHA DE NACIMIENTO" />
+                  <DatePicker id="txtDate" fx:id="date" prefHeight="29.0" prefWidth="224.0" promptText="DD/MM/YYYY" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <Label text="DOMICILIO" />
+                  <TextField id="txtDomicilio" fx:id="txtDomicilio" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+               <children>
+                  <Label text="CORREO ELECTRONICO" />
+                  <TextField id="txtCorreo" fx:id="txtCorreo" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Label text="TELEFONO" />
+                  <TextField id="txtTelefono" fx:id="txtTelefono" />
+               </children>
+            </VBox>
+            <VBox id="vboxDepartamento" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <Label text="DEPARTAMENTO" />
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+               <children>
+                  <Label text="CEDULA" />
+                  <TextField id="txtCedula" fx:id="txtCedula" />
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+      <VBox alignment="CENTER" prefHeight="139.0" prefWidth="619.0" spacing="10.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="600.0" spacing="10.0">
+               <children>
+                  <Label text="NOMBRE DE USUARIO: " />
+                  <TextField id="txtUsuario" fx:id="txtUsuario" />
+                  <Button id="generarUsuario" fx:id="generarUsuario" mnemonicParsing="false" style="-fx-border-width: 1px; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="GENERAR USUARIO" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="600.0" spacing="10.0">
+               <children>
+                  <Label text="CONTRASEÑA:" />
+                  <TextField id="txtPassword" fx:id="txtPassword" />
+                  <Button id="generarPassword" fx:id="generarPassword" mnemonicParsing="false" text="GENERAR CONTRASEÑA" />
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </padding>
       </VBox>
+      <HBox alignment="CENTER" prefHeight="63.0" prefWidth="600.0" spacing="10.0">
+         <children>
+            <Button id="crearUsuario" fx:id="crearUsuario" mnemonicParsing="false" text="CREAR USUARIO" />
+            <Button id="btnVaciar" fx:id="btnVaciar" mnemonicParsing="false" text="VACIAR" />
+            <Button id="cancelar" fx:id="cancelar" mnemonicParsing="false" text="CANCELAR" />
+         </children>
+      </HBox>
    </children>
-</AnchorPane>
+</VBox>

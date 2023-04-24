@@ -48,10 +48,8 @@ public class LoginController {
                 SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
                 conexion.connect();
                 try {
-                    ResultSet rs = conexion.executeQuery("SELECT usuario, contrasena, rol FROM usuarios WHERE usuario='" + usuario + "' AND contrasena=PASSWORD('" + password +"');");
+                    ResultSet rs = conexion.executeQuery("SELECT usuario, contrasena, rol FROM usuarios WHERE usuario='" + usuario + "' AND contrasena=SHA2('"+ password + "', 256);");
                     if (rs.next()) {
-
-
                         // El usuario y la contraseña son válidos
                         System.out.println("SI!");
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);

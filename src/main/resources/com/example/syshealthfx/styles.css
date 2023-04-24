@@ -72,6 +72,9 @@ AnchorPane > VBox > Label{
 .panel-acceso-container{
     -fx-padding: 100px 200px;
 }
+.panel-acceso-depa{
+ -fx-padding: 70px 200px;
+ }
 .panel-acceso{
     -fx-background-color: white;
     -fx-background-radius: 12px;
@@ -107,7 +110,7 @@ AnchorPane > VBox > Label{
 }
 .contenido-usuarios{
     -fx-overflow: scroll;
-    -fx-alignment: baseline_center;
+    -fx-alignment: baseline_top;
     -fx-min-width: 1069px;
     -fx-min-height: 650px;
     -fx-padding: 0px 15px;

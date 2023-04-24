@@ -35,45 +35,59 @@ import com.itextpdf.layout.element.Paragraph;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.UUID;
 
-public class RegistroController implements Initializable {
-    @FXML
-    private ComboBox cmbDepartamentos;
-    @FXML
-    private Button generarUsuario;
-    @FXML
-    private Button generarPassword;
-    @FXML
-    private Button vaciar;
-    @FXML
-    private AnchorPane frame;
-    @FXML
-    private TextField txtUsuario;
-    @FXML
-    private TextField txtNombre;
-    @FXML
-    private TextField txtApellidoA;
-    @FXML
-    private TextField txtApellidoP;
-    @FXML
-    private TextField txtDomicilio;
-    @FXML
-    private DatePicker date;
-    @FXML
-    private TextField txtTelefono;
-    @FXML
-    private TextField txtCorreo;
-    @FXML
-    private TextField txtPassword;
-    @FXML
-    private TextField txtCedula;
+public class RegistroController {
     @FXML
     private ToggleGroup genero;
     @FXML
     private ToggleGroup rol;
+    @FXML
+    private Button btnVaciar;
+    @FXML
+    private Button crearUsuario;
+    @FXML
+    private Button cancelar;
+    private VBox frame;
+    private TextField txtUsuario, txtPassword, txtCedula;
+    private TextField txtNombre, txtApellidoP, txtApellidoM, txtDomicilio;
+    private TextField txtTelefono, txtCorreo;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    private DatePicker date;
+    private Button generarUsuario, generarPassword;
+
+
+    public RegistroController(VBox frame){
+        this.frame = frame;
+        initialize();
+    }
+    public VBox getV(){
+        return this.frame;
+    }
+    public void initialize(){
+
+        txtUsuario = (TextField) frame.lookup("#txtNombre");
+        txtPassword = (TextField) frame.lookup("#txtPassword");
+        txtCedula = (TextField) frame.lookup("#txtCedula");
+        generarUsuario = (Button) frame.lookup("#generarUsuario");
+        generarPassword = (Button) frame.lookup("#generarPassword");
+        txtNombre = (TextField) frame.lookup("#txtNombre");
+        txtApellidoP = (TextField) frame.lookup("#txtApellidoP");
+        txtApellidoM = (TextField) frame.lookup("#txtApellidoM");
+        txtDomicilio = (TextField) frame.lookup("#txtDomicilio");
+        txtTelefono = (TextField) frame.lookup("#txtTelefono");
+        txtCorreo = (TextField) frame.lookup("#txtCorreo");
+        btnVaciar = (Button) frame.lookup("#btnVaciar");
+        cancelar = (Button) frame.lookup("#cancelar");
+        date = (DatePicker) frame.lookup("#txtDate");
+        btnVaciar.setOnAction((e) ->{
+            vaciarFormulario();
+        });
+        crearUsuario = (Button) frame.lookup("#crearUsuario");
+        crearUsuario.setOnAction((e) ->{
+            subirUsuario();
+            vaciarFormulario();
+        });
         genero = new ToggleGroup();
         RadioButton rb1 = new RadioButton("MASCULINO");
         rb1.setSelected(true);
@@ -117,6 +131,7 @@ public class RegistroController implements Initializable {
         rbtnRol.setSpacing(5);
         rbtnRol.getChildren().addAll(rol2, rol3, rol1);
 
+
         rol.selectedToggleProperty().addListener((observable, oldValue, newValue) ->{
             if (newValue == rol1){
                 txtCedula.setDisable(false);
@@ -126,7 +141,7 @@ public class RegistroController implements Initializable {
         });
 
        txtUsuario.textProperty().addListener((observable, oldValue, newValue) ->{
-           if(!newValue.trim().isEmpty()){
+           if(newValue.trim().isEmpty()){
                generarUsuario.setDisable(true);
            } else{
                generarUsuario.setDisable(false);
@@ -151,21 +166,12 @@ public class RegistroController implements Initializable {
             });
         });
     }
-    public void cerrarVentana(){
-        Alert cerrar = new Alert(Alert.AlertType.CONFIRMATION);
-        cerrar.setTitle("CONFIRMACIÓN");
-        cerrar.setHeaderText("¿DESEA CANCELAR LA CAPTURA?");
-        cerrar.setContentText("Se perderan todos los datos...");
-        cerrar.showAndWait();
-        ButtonType result = cerrar.getResult();
-        if(result == ButtonType.OK){
-            frame.getScene().getWindow().hide();
-        }
-    }
+
+    // EN DESARROLLO
     public void generarUsuario(){
-        if(txtNombre.getText() != "" && txtApellidoA.getText() != "" && txtApellidoP.getText() != ""){
+        if(txtNombre.getText() != "" && txtApellidoM.getText() != "" && txtApellidoP.getText() != ""){
            String val1 = txtNombre.getText().trim().substring(0,3);
-           String val2 = txtApellidoA.getText().trim().substring(0,2).toUpperCase();
+           String val2 = txtApellidoM.getText().trim().substring(0,2).toUpperCase();
             char[] symbols = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'};
             String val3 = txtApellidoP.getText().trim().substring(0,1).toLowerCase();
            int val4 = (int) ((Math.random() / 1000) * 1000);
@@ -182,6 +188,7 @@ public class RegistroController implements Initializable {
             alert.showAndWait();
         }
     }
+    //EN DESARROLLO
     public void generarPass(){
         char[] letras = {'a', 'b', 'c', 'd', 'e'};
         char[] symbols = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'};
@@ -204,11 +211,11 @@ public class RegistroController implements Initializable {
         conexion.connect();
         String query1 = "INSERT INTO empleados(id_empleado, id_departamento, nombre, " +
                 "apellido_paterno, apellido_materno, genero, direccion, telefono, correo_electronico, fecha_nacimiento) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (UUID_SHORT(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         String query2 = "INSERT INTO medicos(especialidad, cedula_profesional, id_empleado) " +
                 "VALUES (?, ?, ?)";
         String query3 = "INSERT INTO usuarios(id_usuario, usuario, contrasena, rol, id_empleado) "+
-                "VALUES (?, ?, SHA2(?,256), ?, ?)";
+                "VALUES (UUID_SHORT(), ?, SHA2(?,256), ?, ?)";
         ComboBox<String> combo = (ComboBox<String>) frame.lookup("#cmbDepartamentos");
         String seleccionado = combo.getValue();
         System.out.println(seleccionado);
@@ -216,7 +223,7 @@ public class RegistroController implements Initializable {
         String rolSeleccionado = rbSelectedRol.getText();
         String nombre = txtNombre.getText();
         String apellidoP = txtApellidoP.getText();
-        String apellidoM = txtApellidoA.getText();
+        String apellidoM = txtApellidoM.getText();
         RadioButton rbSelectedGenero = (RadioButton) genero.getSelectedToggle();
         String selectedGenero = rbSelectedGenero.getText();
         String direccion = txtDomicilio.getText();
@@ -230,22 +237,21 @@ public class RegistroController implements Initializable {
 
         try {
             PreparedStatement statement = conexion.preparedStatement(query1);
-            int numero = (int) (Math.random() * 10000) + 1;
-            int numero2 = (int) (Math.random() * 1000) + 1;
-            statement.setInt(1, numero);
+           // statement.setInt(1, numero);
             ResultSet set = conexion.executeQuery("SELECT id_departamento FROM departamentos WHERE nombre_departamento='"+seleccionado+"'");
             if (set.next()){
                 int idDepartamento = set.getInt("id_departamento");
-                statement.setInt(2, idDepartamento);
+                statement.setInt(1, idDepartamento);
             }
-            statement.setString(3, nombre);
-            statement.setString(4, apellidoP);
-            statement.setString(5,apellidoM);
-            statement.setString(6, selectedGenero);
-            statement.setString(7, direccion);
-            statement.setString(8, telefono);
-            statement.setString(9, correo);
-            statement.setDate(10, Date.valueOf(nacimiento));
+
+            statement.setString(2, nombre);
+            statement.setString(3, apellidoP);
+            statement.setString(4,apellidoM);
+            statement.setString(5, selectedGenero);
+            statement.setString(6, direccion);
+            statement.setString(7, telefono);
+            statement.setString(8, correo);
+            statement.setDate(9, Date.valueOf(nacimiento));
             int state1 = 0;
             int state2 = 0;
             int state3 = 0;
@@ -253,10 +259,12 @@ public class RegistroController implements Initializable {
                 case "Medico" -> {
                     state1 = statement.executeUpdate();
                     String cedula = txtCedula.getText();
+                    ResultSet idEmpleado = conexion.executeQuery("SELECT id_empleado FROM empleados WHERE nombre='"+nombre+"';");
+                    int idEmp = idEmpleado.getInt("id_empleado");
                  PreparedStatement statementM = conexion.preparedStatement(query2);
                  statementM.setString(1, seleccionado);
                  statementM.setString(2, cedula);
-                 statementM.setInt(3, numero);
+                 statementM.setInt(3, idEmp);
                  state2 = statementM.executeUpdate();
                 }
                 case "Recepcionista", "Administrador" ->{
@@ -264,11 +272,16 @@ public class RegistroController implements Initializable {
                 }
             }
             PreparedStatement statementU = conexion.preparedStatement(query3);
-            statementU.setInt(1, numero2);
-            statementU.setString(2, usuario);
-            statementU.setString(3, contra);
-            statementU.setString(4, rolSeleccionado);
-            statementU.setInt(5, numero);
+            ResultSet idEmpleado = conexion.executeQuery("SELECT id_empleado FROM empleados WHERE nombre='"+nombre+"';");
+            long idEmp = 0;
+            if(idEmpleado.next()){
+                idEmp = idEmpleado.getLong("id_empleado");
+            }
+            //statementU.setInt(1, numero2);
+            statementU.setString(1, usuario);
+            statementU.setString(2, contra);
+            statementU.setString(3, rolSeleccionado);
+            statementU.setLong(4, idEmp);
             state3 = statementU.executeUpdate();
             boolean state1and2 = state1 == 1 && state3 == 1;
             boolean stateM = state2 == 1;
@@ -284,7 +297,7 @@ public class RegistroController implements Initializable {
 
                 try{
                     // Creamos el objeto PdfWriter para escribir el PDF
-                    PdfWriter writer = new PdfWriter("carta_usuario_"+numero+".pdf");
+                    PdfWriter writer = new PdfWriter("carta_usuario_"+idEmp+".pdf");
 
                     // Creamos el objeto PdfDocument que representa el PDF
                     PdfDocument pdfDoc = new PdfDocument(writer);
@@ -327,8 +340,8 @@ public class RegistroController implements Initializable {
                             .setFontSize(12);
                     Text contenido5 = new Text(""+
                             "Atentamente,\n" +
-                            "\n" +
-                            SesionUsuario.nombreCompleto()).setFontSize(12);
+                            "\n"
+                            ).setFontSize(12);
                     // Agregamos el contenido al documento
                     document.add(new Paragraph(contenido));
                     document.add(new Paragraph(contenido2));
@@ -340,7 +353,7 @@ public class RegistroController implements Initializable {
                     document.close();
 
                 } catch (FileNotFoundException e){
-
+                    System.out.println("HOLA");
                 }
 
 

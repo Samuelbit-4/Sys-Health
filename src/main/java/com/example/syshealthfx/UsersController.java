@@ -1,35 +1,34 @@
 package com.example.syshealthfx;
 
 
-import com.example.syshealthfx.admincontrollers.Usuarios;
+import com.example.syshealthfx.admincontrollers.Departamentos;
+import com.example.syshealthfx.admincontrollers.TablaUsuarios;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
+import javafx.scene.input.*;
 
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class UsersController implements Initializable {
@@ -39,166 +38,250 @@ public class UsersController implements Initializable {
     @FXML
     private Button usuario;
     @FXML
-    private HBox contenidoHBox, buttonModificar;
+    private Button btnInicio;
     @FXML
-    private VBox contenidoInicio, contenidoUsuarios, buttonsMenu;
+    private Button btnPacientes;
+    @FXML
+    private Button btnLaboratorio;
+    @FXML
+    private Button btnCitas;
+    @FXML
+    private Button btnCerrarSesion;
+    @FXML
+    private HBox contenidoHBox;
+    @FXML
+    private VBox contenidoUsuarios;
+    @FXML
+    private VBox botonesAside;
     @FXML
     private Label nombreInicio;
-    private Stage stage;
+
     private SQLClass conexion;
-    private Usuarios usuarios;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        VBox contenidoInicio = null;
         System.out.println(SesionUsuario.getUsuario());
+        botonesAside.getChildren().forEach((boton) ->{
+            boton.setOnMouseClicked((actionEvent) ->{
+                switch (boton.getId()){
+                    case "btnInicio" ->{
+                        Stage stage = new Stage();
+                        try{
+                            Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
+                            Scene scene = new Scene(root);
+                            Image imagenIcono = new Image(getClass().getResourceAsStream("assets/hospital-logo.png"));
+                            stage.getIcons().add(imagenIcono);
+                            stage.setScene(scene);
+                            stage.setMaximized(true);
+                            stage.show();
+                            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
 
-        usuario.setOnAction(new EventHandler<ActionEvent>() {
+                        }catch (IOException e){
+                            System.out.println("no");
+                        }
+                    }
+                    case "btnDepartamentos" ->{
+                        removerElementos();
+                        mostrarVentana("departamentos");
+                        Button botona = (Button) botonesAside.lookup("#"+boton.getId());
+                        TablaUsuarios tabla = new TablaUsuarios();
+                        VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
+                        HBox hb = (HBox) vn.lookup("#btnListaEmpleados");
+                        HBox btnRegistro = (HBox) vn.lookup("#btnRegistrar");
+                        HBox btnRegistrarDepartamento = (HBox) vn.lookup("#btnRegistroDepartamento");
+                        btnRegistro.setOnMouseClicked((actionEvents) ->{
+                            removerElementos();
+                            Button botonActual = (Button) actionEvent.getSource();
+                            botonActual.setDisable(true);
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("registro-usuario.fxml"));
+                            VBox vn1 = null;
+                            try {
+                                vn1 = (VBox) loader.load();
+                                RegistroController registro = new RegistroController(vn1);
+                                VBox vn2 = registro.getV();
+                                contenidoHBox.getChildren().add(vn2);
+                                Button cancelar = (Button) vn2.lookup("#cancelar");
+                                cancelar.setOnAction((e) ->{
+                                    Alert cerrar = new Alert(Alert.AlertType.CONFIRMATION);
+                                    cerrar.setTitle("CONFIRMACIÓN");
+                                    cerrar.setHeaderText("¿DESEA CANCELAR LA CAPTURA?");
+                                    cerrar.setContentText("Se perderan todos los datos...");
+                                    cerrar.showAndWait();
+                                    ButtonType result = cerrar.getResult();
+                                    if(result == ButtonType.OK){
+                                        contenidoHBox.getChildren().remove(vn2);
+                                        removerElementos();
+                                        botonActual.setDisable(false);
+                                        mostrarVentana("departamentos");
+                                    }
+                                });
+                            } catch (IOException e){
+                                e.printStackTrace();
+                            }
 
-            @Override
-            public void handle(ActionEvent actionEvent) {
+                        });
+                        hb.setOnMouseClicked((actionEvents) ->{
+                            removerElementos();
+                            FXMLLoader loader = new FXMLLoader (getClass().getResource("admin-views/departamentos/lista-empleados.fxml"));
+                            VBox vn1 = null;
+                            try {
+                                vn1 = (VBox) loader.load();
+                                vn1.getChildren().add(tabla.mostrarTabla());
+                                Button btnVolver = (Button) vn1.lookup("#btnBack");
+                                btnVolver.setOnAction((e) ->{
+                                    removerElementos();
+                                    mostrarVentana("departamentos");
+                                });
 
-                removerElementos();
-                System.out.println(actionEvent.getSource());
-            }
+
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            vn1.setId("contenidoInicio");
+                            contenidoHBox.getChildren().add(vn1);
+
+                        });
+                        btnRegistrarDepartamento.setOnMouseClicked((registrar) ->{
+                            removerElementos();
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/departamentos/registrar-departamento.fxml"));
+                            VBox vn1 = null;
+                            try{
+                                vn1 = (VBox) loader.load();
+                                contenidoHBox.getChildren().add(vn1);
+                            } catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        });
+
+                    }
+                    case "btnPacientes" ->{
+                        System.out.println("PACIENTES");
+                        removerElementos();
+                        mostrarVentana("pacientes");
+                        VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
+                        HBox btnListaPacientes = (HBox) vn.lookup("#btnListaPacientes");
+                        HBox btnRegistrarPacientes = (HBox) vn.lookup("#btnRegistrarPaciente");
+                        btnListaPacientes.setOnMouseClicked((pacientes) ->{
+                            removerElementos();
+                            mostrarVentana("pacientes", "lista-pacientes");
+                        });
+                        btnRegistrarPacientes.setOnMouseClicked((registrarEvent) ->{
+                            removerElementos();
+                            mostrarVentana("pacientes", "registrar-paciente");
+                        });
+
+
+
+                    }
+                    case "btnLaboratorio" ->{
+                        System.out.println("LABORATORIO");
+                        removerElementos();
+                        mostrarVentana("laboratorio");
+                        VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
+                        HBox btnListaPruebas = (HBox) vn.lookup("#btnListaPruebas");
+                        HBox btnConsultarOrden = (HBox) vn.lookup("#btnConsultarOrden");
+                        HBox btnAgregarPrueba = (HBox) vn.lookup("#btnAgregarPrueba");
+
+                        btnListaPruebas.setOnMouseClicked((listaEvent) ->{
+                            removerElementos();
+                            mostrarVentana("laboratorio", "lista-pruebas");
+
+                        });
+                        btnConsultarOrden.setOnMouseClicked((pruebaEvent) ->{
+                            removerElementos();
+                            mostrarVentana("laboratorio", "consultar-orden");
+                        });
+                        btnAgregarPrueba.setOnMouseClicked((agregarPrueba) ->{
+                            removerElementos();
+                            mostrarVentana("laboratorio", "agregar-prueba");
+                        });
+
+                    }
+                    case "btnCitas" ->{
+                        System.out.println("CITAS");
+                        removerElementos();
+                        mostrarVentana("citas");
+                        VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
+                        HBox btnListaPruebas = (HBox) vn.lookup("#btnListaPruebas");
+                        HBox btnConsultarOrden = (HBox) vn.lookup("#btnConsultarOrden");
+                        HBox btnAgregarPrueba = (HBox) vn.lookup("#btnAgregarPrueba");
+
+                    }
+                    case "btnCerrarSesion" ->{
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("CONFIRMAR");
+                        alert.setHeaderText("CERRAR SESIÓN");
+                        alert.setContentText("¿Está seguro de cerrar sesión?\n Se perderan todos los datos sin guardar...");
+
+                        Optional<ButtonType> result =  alert.showAndWait();
+                        if(result.get() == ButtonType.OK){
+                            Stage stage = new Stage();
+                            Parent root = null;
+                            try {
+                                root = FXMLLoader.load(getClass().getResource("login.fxml"));
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            Scene scene = new Scene(root);
+                            Image imagenIcono = new Image(getClass().getResourceAsStream("assets/hospital-logo.png"));
+                            stage.getIcons().add(imagenIcono);
+                            stage.setScene(scene);
+                            stage.setMaximized(true);
+                            stage.show();
+                            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+                        }
+                    }
+                }
+            });
         });
 
 
+
     }
-    public void removerElementos(){
-        HBox hbox = (HBox) frameAdmin.lookup("#contenidoHBox");
-        VBox vbox = (VBox) hbox.lookup("#contenidoInicio");
-        hbox.getChildren().removeAll(vbox);
-        usuariosFrame();
+    public VBox mostrarVentana(String nombre){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/"+nombre+"/"+nombre+".fxml"));
+            VBox vn = (VBox) loader.load();
+            vn.setId("contenidoInicio");
+
+            contenidoHBox.getChildren().add(vn);
+            return vn;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
     }
-    public void usuariosFrame(){
-        if (contenidoUsuarios == null){
-            contenidoUsuarios = new VBox();
-            contenidoUsuarios.setId("contenidoUsuarios");
-            contenidoUsuarios.getStyleClass().add("contenido-usuarios");
 
-            HBox hboxHeader = new HBox();
-            HBox hboxContainerButtons = new HBox();
-            hboxContainerButtons.setAlignment(Pos.TOP_LEFT);
-            HBox hboxButton = new HBox();
-            hboxContainerButtons.getChildren().add(hboxButton);
+    public VBox mostrarVentana(String nombre, String nombreArchivo){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/"+nombre+"/"+nombreArchivo+".fxml"));
+            VBox vn = (VBox) loader.load();
+            vn.setId("contenidoInicio");
 
-            hboxContainerButtons.setStyle("-fx-padding: 20px 0px 10px 0px");
-            String imagepath = getClass().getResource("assets/editar.png").toExternalForm();
-            Image image = new Image(imagepath);
-            ImageView imagev = new ImageView(image);
-            imagev.setFitHeight(62);
-            imagev.setFitWidth(81);
-            Label labelModificar = new Label("REGISTRAR EMPLEADO");
-            hboxButton.getStyleClass().add("botones-varios");
-            hboxButton.setId("btnModificar");
-
-            hboxButton.getChildren().addAll(imagev, labelModificar);
-
-            hboxHeader.getStyleClass().add("header");
-            Label labelTitulo = new Label();
-            labelTitulo.setText("USUARIOS");
-            hboxHeader.getChildren().add(labelTitulo);
-            contenidoHBox.getChildren().add(contenidoUsuarios);
-            contenidoUsuarios.getChildren().add(hboxHeader);
-            contenidoUsuarios.getChildren().add(hboxContainerButtons);
-
-           try{
-               conexion = new SQLClass("root", "", "sys_health_prueba");
-               conexion.connect();
-               ResultSet rs = conexion.executeQuery("SELECT u.id_usuario, e.nombre, e.apellido_paterno, e.apellido_materno, d.nombre_departamento, u.usuario\n" +
-                       "FROM usuarios u\n" +
-                       "JOIN empleados e ON u.id_empleado = e.id_empleado\n" +
-                       "JOIN departamentos d ON e.id_departamento = d.id_departamento\n");
-               Label col1 = new Label();
-               col1.setText("ID");
-               col1.getStyleClass().add("label-column");
-               Label col2 = new Label();
-               col2.setText("NOMBRE COMPLETO");
-               col2.getStyleClass().add("label-column");
-               Label col3 = new Label();
-               col3.setText("DEPARTAMENTO");
-               col3.getStyleClass().add("label-column");
-               Label col4 = new Label();
-               col4.setText("USUARIO");
-               col4.getStyleClass().add("label-column");
-               Label col5 = new Label();
-                col5.getStyleClass().add("label-column");
-
-               GridPane tabla = new GridPane();
-               tabla.add(col1, 0, 0);
-               tabla.add(col2, 1, 0);
-               tabla.add(col3, 2, 0);
-               tabla.add(col4, 3, 0);
-               tabla.add(col5, 4, 0);
-               tabla.getStyleClass().add("tablas");
-
-               int filaActual = 1;
-               while(rs.next()){
-                   int idUsuario = rs.getInt("id_usuario");
-                   String nombreCompleto = rs.getString("nombre") + " " + rs.getString("apellido_paterno") +" "+ rs.getString("apellido_materno");
-                   String nombreDepartamento = rs.getString("nombre_departamento");
-                   String usuario = rs.getString("usuario");
-                   Label dato1 = new Label();
-                   dato1.getStyleClass().add("label-data");
-                   Label dato2 = new Label();
-                   dato2.getStyleClass().add("label-data");
-                   Label dato3 = new Label();
-                   dato3.getStyleClass().add("label-data");
-                   Label dato4 = new Label();
-                   dato4.getStyleClass().add("label-data");
-                   HBox buttons = new HBox();
-                   buttons.setAlignment(Pos.CENTER);
-                   buttons.getStyleClass().add("buttons-data");
-
-                   Button btnModificar = new Button("MODIFICAR");
-                   btnModificar.getStyleClass().add("modificar");
-                   Button btnEliminar = new Button("ELIMINAR");
-                   btnEliminar.getStyleClass().add("eliminar");
-                   buttons.getChildren().addAll(btnModificar, btnEliminar);
-                   dato1.setText(String.valueOf(idUsuario));
-                   dato2.setText(nombreCompleto);
-                   dato3.setText(nombreDepartamento);
-                   dato4.setText(usuario);
-
-                   tabla.add(dato1, 0, filaActual);
-                   tabla.add(dato2, 1, filaActual);
-                   tabla.add(dato3, 2, filaActual);
-                   tabla.add(dato4, 3 , filaActual);
-                   tabla.add(buttons, 4, filaActual);
-
-                   filaActual++;
-
-               }
-               conexion.disconnect();
-               contenidoUsuarios.getChildren().add(tabla);
-               hboxButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                   @Override
-                   public void handle(MouseEvent mouseEvent) {
-                       Stage stage = new Stage();
-                       try {
-                           Image imageIcon = new Image(getClass().getResourceAsStream("assets/doctor.png"));
-                           Parent root = FXMLLoader.load(getClass().getResource("registro-usuario.fxml"));
-                           Scene scene = new Scene(root);
-                           stage.setResizable(false);
-                           Stage ventanaAnterior = (Stage) hboxButton.getScene().getWindow();
-
-                           stage.getIcons().add(imageIcon);
-                           stage.setTitle("REGISTRO DE EMPLEADOS");
-                           stage.setScene(scene);
-
-                           stage.show();
-                       } catch (IOException e) {
-                           System.out.println("Error al cargar el archivo fxml: " + e.getMessage());
-                       }
-                   }
-               });
-           } catch (SQLException e){
-               throw new RuntimeException(e);
-           }
+            contenidoHBox.getChildren().add(vn);
+            return vn;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
+
+    public void removerElementos(){
+        HBox hbox = (HBox) frameAdmin.lookup("#contenidoHBox");
+        VBox vbox = (VBox) contenidoHBox.lookup("#contenidoInicio");
+        hbox.getChildren().remove(vbox);
+    }
+    public void usuariosFrame(Button boton){
+
+        boton.fire();
+
+
+    }
 }
+
 
 
 

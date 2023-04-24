@@ -12,4 +12,6 @@ module com.example.syshealthfx {
 
     opens com.example.syshealthfx to javafx.fxml;
     exports com.example.syshealthfx;
+    exports com.example.syshealthfx.admincontrollers;
+
 }
