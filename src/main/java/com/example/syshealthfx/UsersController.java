@@ -2,6 +2,8 @@ package com.example.syshealthfx;
 
 
 import com.example.syshealthfx.admincontrollers.Departamentos;
+import com.example.syshealthfx.admincontrollers.Pacientes;
+import com.example.syshealthfx.admincontrollers.TablaPacientes;
 import com.example.syshealthfx.admincontrollers.TablaUsuarios;
 
 import javafx.event.ActionEvent;
@@ -85,7 +87,6 @@ public class UsersController implements Initializable {
                     case "btnDepartamentos" ->{
                         removerElementos();
                         mostrarVentana("departamentos");
-                        Button botona = (Button) botonesAside.lookup("#"+boton.getId());
                         TablaUsuarios tabla = new TablaUsuarios();
                         VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
                         HBox hb = (HBox) vn.lookup("#btnListaEmpleados");
@@ -165,11 +166,49 @@ public class UsersController implements Initializable {
                         HBox btnRegistrarPacientes = (HBox) vn.lookup("#btnRegistrarPaciente");
                         btnListaPacientes.setOnMouseClicked((pacientes) ->{
                             removerElementos();
-                            mostrarVentana("pacientes", "lista-pacientes");
+                            VBox actual = mostrarVentana("pacientes", "lista-pacientes");
+                            //Pacientes listaPacientes = new Pacientes(actual);
+                            TablaPacientes tablaPacientes = new TablaPacientes();
+                            actual.getChildren().add(tablaPacientes.mostrarTabla());
+
                         });
                         btnRegistrarPacientes.setOnMouseClicked((registrarEvent) ->{
                             removerElementos();
-                            mostrarVentana("pacientes", "registrar-paciente");
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/pacientes/registrar-paciente.fxml"));
+                            VBox vn1 = null;
+                            try{
+                                vn1 = (VBox) loader.load();
+
+                                // VBox vn2 = registroPacientes.getPacientes();
+                                contenidoHBox.getChildren().add(vn1);
+                                //Button btnRegistrar = (Button) vn1.lookup("#btnRegistrar");
+                                TextField txtNombre = (TextField) vn1.lookup("#txtNombre");
+                                TextField txtApellidoP = (TextField) vn1.lookup("#txtApellidoP");
+                                TextField txtApellidoM = (TextField) vn1.lookup("#txtApellidoM");
+                                TextField txtDireccion = (TextField) vn1.lookup("#txtDireccion");
+                                TextField txtTelefono = (TextField) vn1.lookup("#txtTelefono");
+                                TextField txtCorreo = (TextField) vn1.lookup("#txtCorreo");
+                                //DatePicker txtFecha = (DatePicker) vn1.lookup("#txtFecha");
+
+                                Button btnRegistrar = (Button) vn1.lookup("#btnRegistrar");
+                                Button btnCancelar = (Button) vn1.lookup("#btnCancelar");
+
+                                btnRegistrar.setOnAction((registroEvento) ->{
+                                    RegistroPacientes registroPacientes = new RegistroPacientes();
+                                    registroPacientes.subirDatos(
+                                            txtNombre.getText(),
+                                            txtApellidoP.getText(),
+                                            txtApellidoM.getText(),
+                                            txtDireccion.getText(),
+                                            txtTelefono.getText(),
+                                            txtCorreo.getText(),
+                                            "2001-10-03"
+                                    );
+                                });
+
+                            }catch (IOException es){
+                                es.printStackTrace();
+                            }
                         });
 
 

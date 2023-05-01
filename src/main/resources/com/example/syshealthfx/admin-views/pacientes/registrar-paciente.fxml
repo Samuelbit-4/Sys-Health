@@ -60,7 +60,7 @@
                                                 <Insets bottom="10.0" />
                                              </padding>
                                           </Label>
-                                          <TextField style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                          <TextField id="txtNombre" fx:id="txtNombre" />
                                        </children>
                                        <padding>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -73,7 +73,7 @@
                                                 <Insets bottom="10.0" />
                                              </padding>
                                           </Label>
-                                          <TextField style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                          <TextField id="txtApellidoP" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.rowIndex="1">
@@ -85,7 +85,7 @@
                                                       <Insets bottom="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <TextField style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                                <TextField id="txtDireccion" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                              </children>
                                           </VBox>
                                        </children>
@@ -99,7 +99,7 @@
                                                       <Insets bottom="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <TextField style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                                <TextField id="txtApellidoM" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -116,7 +116,7 @@
                                                       <Insets bottom="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <TextField style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                                <TextField id="txtTelefono" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                              </children>
                                           </VBox>
                                        </children>
@@ -130,26 +130,25 @@
                                                       <Insets bottom="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <TextField style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                                <TextField id="txtCorreo" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                              </children>
                                           </VBox>
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.rowIndex="2">
                                        <children>
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                          <VBox id="txtFecha" prefHeight="200.0" prefWidth="100.0">
                                              <children>
                                                 <Label prefHeight="27.0" prefWidth="147.0" style="-fx-font-weight: bold;" text="FECHA DE NACIMIENTO">
                                                    <padding>
                                                       <Insets bottom="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <DatePicker />
+                                                <DatePicker id="txtFecha" />
                                              </children>
                                           </VBox>
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" />
                                  </children>
                                  <VBox.margin>
                                     <Insets />
@@ -157,12 +156,12 @@
                               </GridPane>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                  <children>
-                                    <Button mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent black transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="REGISTRAR PACIENTE">
+                                    <Button id="btnRegistrar" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent black transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="REGISTRAR PACIENTE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent red transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="CANCELAR REGISTRO">
+                                    <Button id="btnCancelar" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent red transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="CANCELAR REGISTRO">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
