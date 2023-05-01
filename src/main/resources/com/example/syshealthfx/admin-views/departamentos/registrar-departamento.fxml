@@ -53,7 +53,7 @@
                                                 <Insets bottom="10.0" />
                                              </padding>
                                           </Label>
-                                          <TextField style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                          <TextField id="txtNombreDepartamento" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                        </children>
                                        <padding>
                                           <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -66,10 +66,10 @@
                                                 <Insets bottom="10.0" />
                                              </padding>
                                           </Label>
-                                          <TextArea prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black;" />
+                                          <TextArea id="txtDescripcionDepartamento" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black;" />
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.rowIndex="1">
+                                    <VBox id="listaEmpleados" prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.rowIndex="1">
                                        <children>
                                           <Label style="-fx-font-weight: bold;" text="JEFE DEL DEPARTAMENTO">
                                              <padding>
@@ -83,7 +83,7 @@
                                     <Insets />
                                  </VBox.margin>
                               </GridPane>
-                              <Button mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent black transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="REGISTRAR DEPARTAMENTO">
+                              <Button id="btnRegistrarDepartamento" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent black transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="REGISTRAR DEPARTAMENTO">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>

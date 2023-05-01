@@ -6,8 +6,10 @@ import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
-import com.itextpdf.layout.element.Text;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,7 +32,6 @@ import java.util.ResourceBundle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -60,6 +61,9 @@ public class RegistroController {
     public RegistroController(VBox frame){
         this.frame = frame;
         initialize();
+    }
+    public RegistroController(){
+        System.out.println("1");
     }
     public VBox getV(){
         return this.frame;
@@ -367,6 +371,202 @@ public class RegistroController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+    public void crearDepartamento(String nombre, String descripcion, VBox vn){
+        SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
+        conexion.connect();
+
+        try {
+            ResultSet rs = conexion.executeQuery("SELECT nombre, apellido_paterno, apellido_materno FROM empleados");
+            VBox containerEmpleados = (VBox) vn.lookup("#listaEmpleados");
+            String nombreCompleto = "";
+            ComboBox<String> listaEmpleados = new ComboBox<>();
+            while (rs.next()){
+                nombreCompleto =
+                        rs.getString("nombre")
+                                + " "
+                        +rs.getString("apellido_paterno")
+                                + " "
+                        +rs.getString("apellido_materno");
+                listaEmpleados.getItems().add(nombreCompleto);
+            }
+            conexion.disconnect();
+            containerEmpleados.getChildren().add(listaEmpleados);
+            TextField nombreDepartamento = (TextField) vn.lookup("#txtNombreDepartamento");
+            TextArea descripcionDepartamento = (TextArea) vn.lookup("#txtDescripcionDepartamento");
+
+            Button registrarDepartamento = (Button) vn.lookup("#btnRegistrarDepartamento");
+
+            registrarDepartamento.setOnAction((register) ->{
+                conexion.connect();
+                String query = "INSERT INTO departamentos(nombre_departamento, descripcion_departamento) " +
+                        "VALUES (?, ?)";
+                try{
+                    PreparedStatement ps = conexion.preparedStatement(query);
+                    ps.setString(1, nombreDepartamento.getText());
+                    ps.setString(2, descripcionDepartamento.getText());
+                    ps.executeUpdate();
+                    System.out.println("YA");
+                    conexion.disconnect();
+                } catch (SQLException e){
+                    throw new RuntimeException(e);
+                }
+
+            });
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void generarReporte(String ruta){
+
+        PdfWriter writer = null;
+        try {
+            writer = new PdfWriter(ruta+".pdf");
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            PageSize pageSize = PageSize.A4;
+            Document document = new Document(pdfDoc, pageSize);
+            Text titulo = new Text("SYS-HEALTH\n").setFontSize(24).setBold();
+            Paragraph parrafoTitulo = new Paragraph().add(titulo).setTextAlignment(TextAlignment.CENTER);
+            Text subtitle = new Text("REPORTE GENERAL DE DEPARTAMENTOS").setFontSize(16).setFontColor(ColorConstants.LIGHT_GRAY);
+            Paragraph parrafoSubtitulo = new Paragraph().add(subtitle).setTextAlignment(TextAlignment.CENTER);
+
+            document.add(parrafoTitulo);
+            document.add(parrafoSubtitulo);
+
+            Paragraph contenido1 = new Paragraph("A quien corresponda\n").setTextAlignment(TextAlignment.JUSTIFIED);
+
+            Paragraph parrafo1 = new Paragraph().add("" +
+                    "Hemos creado un archivo PDF que contiene una lista de todos los departamentos registrados en nuestra empresa, así como una lista de todos los empleados que se encuentran actualmente en cada departamento. Este archivo PDF es una herramienta muy útil que le permitirá tener una visión general de la estructura de " +
+                    "nuestra organización y de los empleados que trabajan en ella.\n").setTextAlignment(TextAlignment.JUSTIFIED);
+
+            Paragraph parrafo2 = new Paragraph().add("" +
+                    "A continuación, se presentan dos tablas que conforman la siguiente información\n");
+
+            List contenido2 = new List();
+            ListItem item1 = new ListItem("Departamentos registrados");
+            ListItem item2 = new ListItem("Empleados registrados");
+            ListItem item3 = new ListItem("Numero total de usuarios registrados");
+
+            contenido2.add(item1);
+            contenido2.add(item2);
+            contenido2.add(item3);
+
+            document.add(contenido1);
+            document.add(parrafo1);
+            document.add(parrafo2);
+            document.add(contenido2);
+            
+
+            Text sub1 = new Text("LISTADO DE DEPARTAMENTOS").setBold().setFontSize(20);
+            document.add(new Paragraph().add(sub1).setTextAlignment(TextAlignment.CENTER));
+
+            Table tabla = new Table(new float[]{1, 3, 3});
+            tabla.setWidth(100);
+            tabla.addCell(new Paragraph().add("ID DEPARTAMENTO").setTextAlignment(TextAlignment.CENTER));
+            tabla.addCell(new Paragraph().add("NOMBRE DEPARTAMENTO").setTextAlignment(TextAlignment.CENTER));
+            tabla.addCell(new Paragraph().add("DESCRIPCION").setTextAlignment(TextAlignment.CENTER));
+            SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
+
+            try{
+                conexion.connect();
+                ResultSet rs = conexion.executeQuery("SELECT * FROM departamentos");
+                while(rs.next()){
+                    tabla.addCell(new Paragraph().add(String.valueOf(rs.getInt("id_departamento"))).setTextAlignment(TextAlignment.CENTER));
+                    tabla.addCell(new Paragraph().add(rs.getString("nombre_departamento")).setTextAlignment(TextAlignment.CENTER));
+                    tabla.addCell(new Paragraph().add(rs.getString("descripcion_departamento")).setTextAlignment(TextAlignment.CENTER));
+                }
+                conexion.disconnect();
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            document.add(tabla);
+            document.add(new AreaBreak());
+
+            Text sub2= new Text("EMPLEADOS REGISTRADOS").setBold().setFontSize(20);
+            document.add(new Paragraph().add(sub2).setTextAlignment(TextAlignment.CENTER));
+            Table tabla2 = new Table(4);
+            tabla2.addCell(new Paragraph().add("ID EMPLEADO").setTextAlignment(TextAlignment.CENTER));
+            tabla2.addCell(new Paragraph().add("ID DEPARTAMENTO").setTextAlignment(TextAlignment.CENTER));
+            tabla2.addCell(new Paragraph().add("NOMBRE").setTextAlignment(TextAlignment.CENTER));
+            tabla2.addCell(new Paragraph().add("CORREO").setTextAlignment(TextAlignment.CENTER));
+
+            conexion.connect();
+            try{
+                ResultSet rs = conexion.executeQuery("SELECT id_empleado, id_departamento, nombre, apellido_paterno, apellido_materno, correo_electronico" +
+                        " FROM empleados");
+                while(rs.next()){
+                    tabla2.addCell(new Paragraph().add(String.valueOf(rs.getLong("id_empleado"))).setTextAlignment(TextAlignment.CENTER));
+                    tabla2.addCell(new Paragraph().add(String.valueOf(rs.getInt("id_departamento"))).setTextAlignment(TextAlignment.CENTER));
+
+                    tabla2.addCell(new Paragraph().add(rs.getString("nombre") + " " + rs.getString("apellido_paterno") + " " + rs.getString("apellido_materno"))
+                            .setTextAlignment(TextAlignment.CENTER));
+                    tabla2.addCell(new Paragraph().add(String.valueOf(rs.getString("correo_electronico"))).setTextAlignment(TextAlignment.CENTER));
+
+                }
+                document.add(tabla2);
+                document.add(new AreaBreak());
+                conexion.disconnect();
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+            Text sub3 = new Text("CANTIDAD DE USUARIOS REGISTRADOSs").setBold().setFontSize(20);
+            document.add(new Paragraph().add(sub3).setTextAlignment(TextAlignment.CENTER));
+            conexion.connect();
+            int contadorM = 0;
+            int contadorA = 0;
+            int contadorR = 0;
+            int contadorU = 0;
+            try{
+                ResultSet rs = conexion.executeQuery("SELECT rol FROM usuarios");
+                while(rs.next()){
+                    switch (rs.getString("rol")){
+                        case "Medico" ->{
+                            contadorM++;
+                        }
+                        case "Administrador" ->{
+                            contadorA++;
+                        }
+                        case "Recepcionista"->{
+                            contadorR++;
+                        }
+                    }
+                    contadorU++;
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+
+           // document.add(tabla2);
+            Text info1 = new Text("\nLa cantidad de usuarios registrados en el sistema son:\n");
+            document.add(new Paragraph().add(info1).setTextAlignment(TextAlignment.JUSTIFIED));
+            List cantidades = new List();
+            ListItem cantidadMedicos = new ListItem("MEDICOS: " + String.valueOf(contadorM));
+            ListItem cantidadAdmins = new ListItem("ADMINISTRADORES: " + String.valueOf(contadorA));
+            ListItem cantidadRecepcion = new ListItem("RECEPCIONISTAS: " + String.valueOf(contadorR));
+
+            cantidades.add(cantidadMedicos);
+            cantidades.add(cantidadAdmins);
+            cantidades.add(cantidadRecepcion);
+
+            document.add(cantidades);
+
+            Text info2 = new Text("\nDando un total de usuarios de : "+ contadorU);
+            document.add(new Paragraph().add(info2).setTextAlignment(TextAlignment.JUSTIFIED));
+
+            Text info3 = new Text("\nSin más por el momento, atentamente: \n");
+            document.add(new Paragraph().add(info3).setTextAlignment(TextAlignment.JUSTIFIED));
+            document.close();
+            System.out.println("REPORTE");
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
 
     }
 }

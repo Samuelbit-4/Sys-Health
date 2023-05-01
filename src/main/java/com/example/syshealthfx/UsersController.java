@@ -21,10 +21,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.input.*;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -57,6 +59,7 @@ public class UsersController implements Initializable {
     private VBox botonesAside;
     @FXML
     private Label nombreInicio;
+
 
     private SQLClass conexion;
 
@@ -92,6 +95,7 @@ public class UsersController implements Initializable {
                         HBox hb = (HBox) vn.lookup("#btnListaEmpleados");
                         HBox btnRegistro = (HBox) vn.lookup("#btnRegistrar");
                         HBox btnRegistrarDepartamento = (HBox) vn.lookup("#btnRegistroDepartamento");
+                        HBox btnReporteDepartamento = (HBox) vn.lookup("#btnPdfDepartamento");
                         btnRegistro.setOnMouseClicked((actionEvents) ->{
                             removerElementos();
                             Button botonActual = (Button) actionEvent.getSource();
@@ -144,6 +148,28 @@ public class UsersController implements Initializable {
                             contenidoHBox.getChildren().add(vn1);
 
                         });
+                        btnReporteDepartamento.setOnMouseClicked((depa)->{
+                            System.out.println("Hola");
+                            FileChooser fileChooser = new FileChooser();
+                            fileChooser.setTitle("Seleccionar ubicación");
+
+                            File initialDirectory = new File(System.getProperty("user.home"));
+                            fileChooser.setInitialDirectory(initialDirectory);
+
+                            File selectedDirectory = fileChooser.showSaveDialog(frameAdmin.getScene().getWindow());
+
+
+                            if (selectedDirectory != null) {
+                                System.out.println("Ubicación seleccionada: " + selectedDirectory.getAbsolutePath());
+                                RegistroController reporte = new RegistroController();
+                                reporte.generarReporte(selectedDirectory.getAbsolutePath());
+                                Alert aviso = new Alert(Alert.AlertType.INFORMATION);
+                                aviso.setTitle("PDF CREADO CON EXITO");
+                                aviso.setHeaderText("REPORTE GENERADO CON EXITO");
+                                aviso.setContentText("El reporte a sido creado con éxito\nSe a guardado en: "+selectedDirectory.getAbsolutePath());
+                                aviso.show();
+                            }
+                        });
                         btnRegistrarDepartamento.setOnMouseClicked((registrar) ->{
                             removerElementos();
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/departamentos/registrar-departamento.fxml"));
@@ -151,6 +177,8 @@ public class UsersController implements Initializable {
                             try{
                                 vn1 = (VBox) loader.load();
                                 contenidoHBox.getChildren().add(vn1);
+                                RegistroController registrarDepartamento = new RegistroController();
+                                registrarDepartamento.crearDepartamento("", "", vn1);
                             } catch (IOException e){
                                 e.printStackTrace();
                             }

@@ -158,7 +158,7 @@ public class RegistroPacientes {
         document.add(new Paragraph(contenido5));
 
         document.close();
-       ;
+
 
         Alert alertAviso = new Alert(Alert.AlertType.INFORMATION);
         alertAviso.setTitle("PDF EXITOSO");
@@ -166,5 +166,6 @@ public class RegistroPacientes {
         alertAviso.setContentText("El PDF se a generado con exito, se encuentra en la ubicación:\n");
         alertAviso.show();
     }
+
 
 }
