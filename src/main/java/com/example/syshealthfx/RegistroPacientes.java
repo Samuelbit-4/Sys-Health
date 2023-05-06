@@ -52,14 +52,14 @@ public class RegistroPacientes {
     }
 
 
-    public void subirDatos(String nombre, String apellidoP, String apellidoM, String direccion, String telefono, String correoElectronico, String fechaNacimiento ){
+    public void subirDatos(String nombre, String apellidoP, String apellidoM, String direccion, String telefono, String correoElectronico, String fechaNacimiento, String genero ){
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
         conexion.connect();
 
         String query = "INSERT INTO pacientes(id_paciente, nombre, apellido_paterno, apellido_materno, genero, direccion, telefono, correo_electronico, fecha_nacimiento)" +
                 " VALUES(UUID_SHORT(), ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        String genero = "FEMENINO";
+
 
         try{
            PreparedStatement ps = conexion.preparedStatement(query);

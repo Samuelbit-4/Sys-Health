@@ -70,7 +70,7 @@ public class RegistroController {
     }
     public void initialize(){
 
-        txtUsuario = (TextField) frame.lookup("#txtNombre");
+        txtUsuario = (TextField) frame.lookup("#txtUsuario");
         txtPassword = (TextField) frame.lookup("#txtPassword");
         txtCedula = (TextField) frame.lookup("#txtCedula");
         generarUsuario = (Button) frame.lookup("#generarUsuario");
@@ -144,20 +144,8 @@ public class RegistroController {
             }
         });
 
-       txtUsuario.textProperty().addListener((observable, oldValue, newValue) ->{
-           if(newValue.trim().isEmpty()){
-               generarUsuario.setDisable(true);
-           } else{
-               generarUsuario.setDisable(false);
-           }
-       });
-       txtPassword.textProperty().addListener((observable, oldValue, newValue) ->{
-            if(!newValue.trim().isEmpty()){
-                generarPassword.setDisable(true);
-            } else{
-                generarPassword.setDisable(false);
-            }
-        });
+
+
 
     }
     public void vaciarFormulario(){
@@ -171,44 +159,6 @@ public class RegistroController {
         });
     }
 
-    // EN DESARROLLO
-    public void generarUsuario(){
-        if(txtNombre.getText() != "" && txtApellidoM.getText() != "" && txtApellidoP.getText() != ""){
-           String val1 = txtNombre.getText().trim().substring(0,3);
-           String val2 = txtApellidoM.getText().trim().substring(0,2).toUpperCase();
-            char[] symbols = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'};
-            String val3 = txtApellidoP.getText().trim().substring(0,1).toLowerCase();
-           int val4 = (int) ((Math.random() / 1000) * 1000);
-           Random rand = new Random();
-           int numeroA = rand.nextInt(12);
-            System.out.println(val1 + " " + val2 + " " + val3 + " " + val4 + " " + symbols[numeroA]);
-            txtUsuario.setText(val1+val2+symbols[numeroA]+val3+val4);
-        } else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("UPS!");
-            alert.setHeaderText("ERROR");
-            alert.setContentText("Error: No es posible generar el usuario, revisa que " +
-                    "\nlos datos estén completos");
-            alert.showAndWait();
-        }
-    }
-    //EN DESARROLLO
-    public void generarPass(){
-        char[] letras = {'a', 'b', 'c', 'd', 'e'};
-        char[] symbols = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'};
-        Random rand = new Random();
-        String acumulador;
-        String pass = "";
-        int contador = 0;
-        while(contador < 4){
-            int numeroSimbolos = rand.nextInt(12);
-            int numeroLetras = rand.nextInt(5);
-            acumulador = String.valueOf(letras[numeroLetras])+ String.valueOf(symbols[numeroSimbolos]);
-            pass += acumulador;
-            contador++;
-        }
-        txtPassword.setText(pass);
-    }
     public void subirUsuario(){
         Random ran = new Random();
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
@@ -262,14 +212,18 @@ public class RegistroController {
             switch (rolSeleccionado){
                 case "Medico" -> {
                     state1 = statement.executeUpdate();
+
                     String cedula = txtCedula.getText();
                     ResultSet idEmpleado = conexion.executeQuery("SELECT id_empleado FROM empleados WHERE nombre='"+nombre+"';");
-                    int idEmp = idEmpleado.getInt("id_empleado");
-                 PreparedStatement statementM = conexion.preparedStatement(query2);
-                 statementM.setString(1, seleccionado);
-                 statementM.setString(2, cedula);
-                 statementM.setInt(3, idEmp);
-                 state2 = statementM.executeUpdate();
+                    if (idEmpleado.next()){
+                        long idEmp = idEmpleado.getLong("id_empleado");
+                        PreparedStatement statementM = conexion.preparedStatement(query2);
+                        statementM.setString(1, seleccionado);
+                        statementM.setString(2, cedula);
+                        statementM.setLong(3, idEmp);
+                        state2 = statementM.executeUpdate();
+                    }
+
                 }
                 case "Recepcionista", "Administrador" ->{
                     state1 = statement.executeUpdate();
@@ -408,6 +362,12 @@ public class RegistroController {
                     ps.setString(2, descripcionDepartamento.getText());
                     ps.executeUpdate();
                     System.out.println("YA");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("ÉXITO");
+                    alert.setHeaderText("DEPARTAMENTO CREADO CON ÉXITO");
+                    alert.show();
+                    nombreDepartamento.setText("");
+                    descripcionDepartamento.setText("");
                     conexion.disconnect();
                 } catch (SQLException e){
                     throw new RuntimeException(e);

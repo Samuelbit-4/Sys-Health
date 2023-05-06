@@ -251,3 +251,67 @@ AnchorPane > VBox > Label{
     -fx-background-color: #79FFF5;
     -fx-text-fill: black;
 }
+.btn-registro-estilo{
+    -fx-background-color: white;
+}
+.btn-registro-estilo:hover{
+    -fx-background-color: #5C5566;
+    -fx-text-fill: white;
+    -fx-border-color: transparent transparent blue transparent;
+}
+.btn-registro-cancelar{
+ -fx-background-color: white;
+}
+.btn-registro-cancelar:hover{
+ -fx-background-color: #9C3400;
+ -fx-text-fill: white;
+     -fx-border-color: transparent transparent red transparent;
+}
+.contenedor-cita{
+    -fx-spacing: 10px;
+    -fx-padding: 10px;
+}
+.contenedor-cita:hover{
+
+}
+.contenedor-cita VBox{
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+.contenedor-cita VBox:hover{
+-fx-effect: dropshadow(three-pass-box, rgba(0, 0,0), 10, 0, 0, 0);
+}
+.contenedor-cita VBox Label{
+    -fx-padding: 10px;
+}
+.contenedor-cita VBox Label:first-child{
+    -fx-text-fill: #cacaca;
+}
+.btn-agendar{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-border-weight: 3px;
+}
+.btn-agendar:hover{
+    -fx-background-color: transparent;
+    -fx-text-fill: #011A58;
+    -fx-border-weight: 3px;
+    -fx-border-color: black;
+}
+.btn-calendario{
+    -fx-background-color: #011A58;
+    -fx-background-radius: 60px;
+    -fx-border-radius: 60px;
+    -fx-border-color: black;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+.btn-calendario:hover{
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+}

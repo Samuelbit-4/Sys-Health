@@ -1,15 +1,5 @@
 package com.example.syshealthfx.admincontrollers;
 
-import com.example.syshealthfx.SQLClass;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Pacientes {
     private long idPaciente;

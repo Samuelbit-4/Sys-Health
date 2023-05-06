@@ -1,10 +1,11 @@
 package com.example.syshealthfx;
 
 
-import com.example.syshealthfx.admincontrollers.Departamentos;
-import com.example.syshealthfx.admincontrollers.Pacientes;
-import com.example.syshealthfx.admincontrollers.TablaPacientes;
-import com.example.syshealthfx.admincontrollers.TablaUsuarios;
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.MonthView;
+import com.example.syshealthfx.admincontrollers.*;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -16,14 +17,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+
+
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.fxml.Initializable;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.input.*;
+import org.joda.time.LocalDateTime;
 
 
 import java.io.File;
@@ -99,13 +104,15 @@ public class UsersController implements Initializable {
                         btnRegistro.setOnMouseClicked((actionEvents) ->{
                             removerElementos();
                             Button botonActual = (Button) actionEvent.getSource();
-                            botonActual.setDisable(true);
+                            //botonActual.setDisable(true);
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("registro-usuario.fxml"));
                             VBox vn1 = null;
                             try {
                                 vn1 = (VBox) loader.load();
+                                vn1.setId("contenidoInicio");
                                 RegistroController registro = new RegistroController(vn1);
                                 VBox vn2 = registro.getV();
+                                vn2.setId("contenidoInicio");
                                 contenidoHBox.getChildren().add(vn2);
                                 Button cancelar = (Button) vn2.lookup("#cancelar");
                                 cancelar.setOnAction((e) ->{
@@ -118,7 +125,7 @@ public class UsersController implements Initializable {
                                     if(result == ButtonType.OK){
                                         contenidoHBox.getChildren().remove(vn2);
                                         removerElementos();
-                                        botonActual.setDisable(false);
+                                       // botonActual.setDisable(false);
                                         mostrarVentana("departamentos");
                                     }
                                 });
@@ -176,6 +183,7 @@ public class UsersController implements Initializable {
                             VBox vn1 = null;
                             try{
                                 vn1 = (VBox) loader.load();
+                                vn1.setId("contenidoInicio");
                                 contenidoHBox.getChildren().add(vn1);
                                 RegistroController registrarDepartamento = new RegistroController();
                                 registrarDepartamento.crearDepartamento("", "", vn1);
@@ -206,21 +214,33 @@ public class UsersController implements Initializable {
                             VBox vn1 = null;
                             try{
                                 vn1 = (VBox) loader.load();
+                                vn1.setId("contenidoInicio");
+                                ToggleGroup genero = new ToggleGroup();
+                                RadioButton rb1 = new RadioButton("MASCULINO");
+                                rb1.setSelected(true);
+                                rb1.setStyle("-fx-font-weight: bold");
+                                RadioButton rb2 = new RadioButton("FEMENINO");
+                                rb2.setStyle("-fx-font-weight: bold");
+                                rb1.setToggleGroup(genero);
+                                rb2.setToggleGroup(genero);
+                                VBox toggle = (VBox) vn1.lookup("#toggleGenero");
+                                toggle.spacingProperty().add(5);
+                                toggle.getChildren().addAll(rb1, rb2);
 
-                                // VBox vn2 = registroPacientes.getPacientes();
                                 contenidoHBox.getChildren().add(vn1);
-                                //Button btnRegistrar = (Button) vn1.lookup("#btnRegistrar");
+
                                 TextField txtNombre = (TextField) vn1.lookup("#txtNombre");
                                 TextField txtApellidoP = (TextField) vn1.lookup("#txtApellidoP");
                                 TextField txtApellidoM = (TextField) vn1.lookup("#txtApellidoM");
                                 TextField txtDireccion = (TextField) vn1.lookup("#txtDireccion");
                                 TextField txtTelefono = (TextField) vn1.lookup("#txtTelefono");
                                 TextField txtCorreo = (TextField) vn1.lookup("#txtCorreo");
-                                //DatePicker txtFecha = (DatePicker) vn1.lookup("#txtFecha");
+                                DatePicker txtFecha = (DatePicker) vn1.lookup("#txtFecha");
 
                                 Button btnRegistrar = (Button) vn1.lookup("#btnRegistrar");
                                 Button btnCancelar = (Button) vn1.lookup("#btnCancelar");
-
+                                RadioButton selected = (RadioButton) genero.getSelectedToggle();
+                                String generoSelected = selected.getText();
                                 btnRegistrar.setOnAction((registroEvento) ->{
                                     RegistroPacientes registroPacientes = new RegistroPacientes();
                                     registroPacientes.subirDatos(
@@ -230,7 +250,8 @@ public class UsersController implements Initializable {
                                             txtDireccion.getText(),
                                             txtTelefono.getText(),
                                             txtCorreo.getText(),
-                                            "2001-10-03"
+                                            String.valueOf(txtFecha.getValue()),
+                                            generoSelected
                                     );
                                 });
 
@@ -248,33 +269,41 @@ public class UsersController implements Initializable {
                         mostrarVentana("laboratorio");
                         VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
                         HBox btnListaPruebas = (HBox) vn.lookup("#btnListaPruebas");
-                        HBox btnConsultarOrden = (HBox) vn.lookup("#btnConsultarOrden");
-                        HBox btnAgregarPrueba = (HBox) vn.lookup("#btnAgregarPrueba");
+                       // HBox btnConsultarOrden = (HBox) vn.lookup("#btnConsultarOrden");
+                       // HBox btnAgregarPrueba = (HBox) vn.lookup("#btnAgregarPrueba");
+                        HBox btnGenerarReportePrueba = (HBox) vn.lookup("#btnGenerarReportePruebas");
 
                         btnListaPruebas.setOnMouseClicked((listaEvent) ->{
                             removerElementos();
-                            mostrarVentana("laboratorio", "lista-pruebas");
+                            VBox vn1 = mostrarVentana("laboratorio", "lista-pruebas");
+                            TablaLab tabla = new TablaLab();
+                            vn1.getChildren().add(tabla.mostrarTabla());
 
                         });
-                        btnConsultarOrden.setOnMouseClicked((pruebaEvent) ->{
-                            removerElementos();
-                            mostrarVentana("laboratorio", "consultar-orden");
-                        });
-                        btnAgregarPrueba.setOnMouseClicked((agregarPrueba) ->{
-                            removerElementos();
-                            mostrarVentana("laboratorio", "agregar-prueba");
+                        btnGenerarReportePrueba.setOnMouseClicked((reporte) ->{
+                            TablaLab reportepdf = new TablaLab();
+                            reportepdf.generarReporteLab();
                         });
 
                     }
                     case "btnCitas" ->{
                         System.out.println("CITAS");
                         removerElementos();
-                        mostrarVentana("citas");
-                        VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
-                        HBox btnListaPruebas = (HBox) vn.lookup("#btnListaPruebas");
-                        HBox btnConsultarOrden = (HBox) vn.lookup("#btnConsultarOrden");
-                        HBox btnAgregarPrueba = (HBox) vn.lookup("#btnAgregarPrueba");
+                        Stage stageActual = (Stage) frameAdmin.getScene().getWindow();
 
+                        Stage stage = new Stage();
+                        try{
+                            Parent root = FXMLLoader.load(getClass().getResource("admin-views/citas/calendario.fxml"));
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.setMaximized(true);
+                            stage.centerOnScreen();
+                            stageActual.hide();
+                            stage.showAndWait();
+                            stageActual.show();
+                        } catch (IOException e){
+
+                        }
                     }
                     case "btnCerrarSesion" ->{
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -303,16 +332,12 @@ public class UsersController implements Initializable {
                 }
             });
         });
-
-
-
     }
     public VBox mostrarVentana(String nombre){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/"+nombre+"/"+nombre+".fxml"));
             VBox vn = (VBox) loader.load();
             vn.setId("contenidoInicio");
-
             contenidoHBox.getChildren().add(vn);
             return vn;
         } catch (IOException e) {
@@ -341,12 +366,7 @@ public class UsersController implements Initializable {
         VBox vbox = (VBox) contenidoHBox.lookup("#contenidoInicio");
         hbox.getChildren().remove(vbox);
     }
-    public void usuariosFrame(Button boton){
 
-        boton.fire();
-
-
-    }
 }
 
 

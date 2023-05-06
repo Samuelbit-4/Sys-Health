@@ -76,77 +76,59 @@
                                           <TextField id="txtApellidoP" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.rowIndex="1">
-                                       <children>
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Label style="-fx-font-weight: bold;" text="DIRECCIÓN">
-                                                   <padding>
-                                                      <Insets bottom="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <TextField id="txtDireccion" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
-                                       <children>
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Label prefHeight="27.0" prefWidth="129.0" style="-fx-font-weight: bold;" text="APELLIDO MATERNO">
-                                                   <padding>
-                                                      <Insets bottom="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <TextField id="txtApellidoM" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                             </padding>
-                                          </VBox>
-                                       </children>
-                                    </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Label style="-fx-font-weight: bold;" text="TELEFONO">
-                                                   <padding>
-                                                      <Insets bottom="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <TextField id="txtTelefono" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
-                                             </children>
-                                          </VBox>
+                                          <Label style="-fx-font-weight: bold;" text="DIRECCIÓN">
+                                             <padding>
+                                                <Insets bottom="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <TextField id="txtDireccion" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.columnIndex="2">
+                                       <children>
+                                          <Label prefHeight="27.0" prefWidth="129.0" style="-fx-font-weight: bold;" text="APELLIDO MATERNO">
+                                             <padding>
+                                                <Insets bottom="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <TextField id="txtApellidoM" prefHeight="28.0" prefWidth="184.0" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                        <children>
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Label style="-fx-font-weight: bold;" text="CORREO ELECTRONICO">
-                                                   <padding>
-                                                      <Insets bottom="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <TextField id="txtCorreo" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
-                                             </children>
-                                          </VBox>
+                                          <Label style="-fx-font-weight: bold;" text="TELEFONO">
+                                             <padding>
+                                                <Insets bottom="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <TextField id="txtTelefono" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
                                        </children>
                                     </VBox>
                                     <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.rowIndex="2">
                                        <children>
-                                          <VBox id="txtFecha" prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Label prefHeight="27.0" prefWidth="147.0" style="-fx-font-weight: bold;" text="FECHA DE NACIMIENTO">
-                                                   <padding>
-                                                      <Insets bottom="10.0" />
-                                                   </padding>
-                                                </Label>
-                                                <DatePicker id="txtFecha" />
-                                             </children>
-                                          </VBox>
+                                          <Label style="-fx-font-weight: bold;" text="CORREO ELECTRONICO">
+                                             <padding>
+                                                <Insets bottom="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <TextField id="txtCorreo" style="-fx-background-radius: 0; -fx-border-radius: 0; -fx-background-color: white; -fx-border-color: black; -fx-font-weight: 200;" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label prefHeight="27.0" prefWidth="147.0" style="-fx-font-weight: bold;" text="FECHA DE NACIMIENTO">
+                                             <padding>
+                                                <Insets bottom="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <DatePicker id="txtFecha" />
+                                       </children>
+                                    </VBox>
+                                    <VBox id="toggleGenero" prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 15px;" GridPane.rowIndex="1">
+                                       <children>
+                                          <Label style="-fx-font-weight: bold;" text="GENERO" />
                                        </children>
                                     </VBox>
                                  </children>
@@ -156,12 +138,12 @@
                               </GridPane>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                  <children>
-                                    <Button id="btnRegistrar" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent black transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="REGISTRAR PACIENTE">
+                                    <Button id="btnRegistrar" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-border-color: transparent transparent black transparent; -fx-border-width: 2px; -fx-font-weight: bold;" styleClass="btn-registro-estilo" text="REGISTRAR PACIENTE">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button id="btnCancelar" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-background-color: white; -fx-border-color: transparent transparent red transparent; -fx-border-width: 2px; -fx-font-weight: bold;" text="CANCELAR REGISTRO">
+                                    <Button id="btnCancelar" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-border-color: transparent transparent red transparent; -fx-border-width: 2px; -fx-font-weight: bold;" styleClass="btn-registro-cancelar" text="CANCELAR REGISTRO">
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
                                        </cursor>

@@ -109,14 +109,12 @@
                <children>
                   <Label text="NOMBRE DE USUARIO: " />
                   <TextField id="txtUsuario" fx:id="txtUsuario" />
-                  <Button id="generarUsuario" fx:id="generarUsuario" mnemonicParsing="false" style="-fx-border-width: 1px; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="GENERAR USUARIO" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <Label text="CONTRASEÑA:" />
                   <TextField id="txtPassword" fx:id="txtPassword" />
-                  <Button id="generarPassword" fx:id="generarPassword" mnemonicParsing="false" text="GENERAR CONTRASEÑA" />
                </children>
             </HBox>
          </children>
