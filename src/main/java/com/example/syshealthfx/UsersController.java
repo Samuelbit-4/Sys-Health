@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.fxml.Initializable;
@@ -73,6 +74,7 @@ public class UsersController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         VBox contenidoInicio = null;
         System.out.println(SesionUsuario.getUsuario());
+        nombreInicio.setText("BIENVENIDO: "+SesionUsuario.getUsuario());
         botonesAside.getChildren().forEach((boton) ->{
             boton.setOnMouseClicked((actionEvent) ->{
                 switch (boton.getId()){
@@ -142,11 +144,35 @@ public class UsersController implements Initializable {
                                 vn1 = (VBox) loader.load();
                                 vn1.getChildren().add(tabla.mostrarTabla());
                                 Button btnVolver = (Button) vn1.lookup("#btnBack");
+                                TextField nombreUsuario = (TextField) vn1.lookup("#nombreUsuario");
+                                Button btnBuscar = (Button) vn1.lookup("#btnBuscar");
                                 btnVolver.setOnAction((e) ->{
                                     removerElementos();
                                     mostrarVentana("departamentos");
                                 });
+                                TablaPacientes buscar = new TablaPacientes();
+                                btnBuscar.setOnAction(action ->{
+                                    System.out.println("HOLA");
+                                    Usuarios usuario = buscar.buscarEmpleado(nombreUsuario.getText());
+                                    Stage stage = new Stage();
 
+                                    try {
+                                        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("admin-views/departamentos/actualizar-empleado.fxml"));
+                                        Parent root = null;
+                                        root = loader1.load();
+                                        ModificarEmpleado modificarEmpleado = loader1.getController();
+                                        modificarEmpleado.setUsuario(usuario);
+
+                                        Scene scene = new Scene(root);
+                                        stage.setScene(scene);
+                                        stage.show();
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                                nombreUsuario.setOnAction(action ->{
+                                    btnBuscar.fire();
+                                });
 
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -206,7 +232,32 @@ public class UsersController implements Initializable {
                             //Pacientes listaPacientes = new Pacientes(actual);
                             TablaPacientes tablaPacientes = new TablaPacientes();
                             actual.getChildren().add(tablaPacientes.mostrarTabla());
+                            Button btnBuscar = (Button) actual.lookup("#btnBuscar");
+                            TextField txtNombre = (TextField) actual.lookup("#txtNombrePaciente");
+                            txtNombre.setOnAction(event ->{
+                                btnBuscar.fire();
+                            });
+                            TablaPacientes pacientes1 = new TablaPacientes();
+                            btnBuscar.setOnAction(event ->{
+                                Pacientes paciente = (Pacientes) pacientes1.buscarPaciente(txtNombre.getText());
+                                try{
+                                    Stage stage = new Stage();
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/pacientes/actualizar-paciente.fxml"));
+                                    Parent root = null;
+                                    root = loader.load();
+                                    ModificarPaciente modificarPaciente = loader.getController();
+                                    modificarPaciente.setPaciente(paciente);
+                                    Scene scene = new Scene(root);
+                                    stage.setScene(scene);
+                                    stage.showAndWait();
+                                    VBox contenedor = (VBox) actual.lookup("#tablaPacientes");
+                                    actual.getChildren().remove(contenedor);
+                                    actual.getChildren().add(tablaPacientes.mostrarTabla());
 
+                                } catch (IOException ese){
+
+                                }
+                            });
                         });
                         btnRegistrarPacientes.setOnMouseClicked((registrarEvent) ->{
                             removerElementos();
@@ -259,6 +310,7 @@ public class UsersController implements Initializable {
                                 es.printStackTrace();
                             }
                         });
+
 
 
 
@@ -352,7 +404,6 @@ public class UsersController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/"+nombre+"/"+nombreArchivo+".fxml"));
             VBox vn = (VBox) loader.load();
             vn.setId("contenidoInicio");
-
             contenidoHBox.getChildren().add(vn);
             return vn;
         } catch (IOException e) {

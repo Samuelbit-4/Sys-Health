@@ -21,9 +21,9 @@
          <children>
             <VBox fx:id="buttonsMenu" prefHeight="650.0" prefWidth="215.0" styleClass="vbox-buttons">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="111.0" prefWidth="223.0" text="NOMBRE HOLA" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="111.0" prefWidth="223.0" text="SYS HEALTH" textAlignment="CENTER">
                      <font>
-                        <Font name="Arial Rounded MT Bold" size="12.0" />
+                        <Font name="Arial Rounded MT Bold" size="32.0" />
                      </font>
                   </Label>
                   <VBox fx:id="botonesAside" alignment="TOP_CENTER" prefHeight="543.0" prefWidth="215.0" spacing="15.0">

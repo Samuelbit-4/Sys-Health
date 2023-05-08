@@ -55,8 +55,9 @@ public class TablaUsuarios{
 
             // Agregar las columnas a la TableView
             table.getColumns().addAll(idColumn, nombreColumn, apellidoPaternoColumn, apellidoMaternoColumn, departamentoColumn, usuarioColumn);
-            Stage stage = new Stage();
+
             conexion.disconnect();
+            
         } catch (SQLException e){
             e.printStackTrace();
         }
