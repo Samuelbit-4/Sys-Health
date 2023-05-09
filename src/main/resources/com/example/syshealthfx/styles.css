@@ -315,3 +315,14 @@ AnchorPane > VBox > Label{
     -fx-background-color: transparent;
     -fx-text-fill: black;
 }
+
+.label-inicio-medico{
+-fx-background-color: black;
+-fx-border-color: transparent transparent blue transparent;
+-fx-border-width: 3px;
+-fx-text-fill: white;
+}
+
+.vbox-citas-medico{
+-fx-background-color: white;
+}

@@ -50,28 +50,78 @@ public class LoginController {
                 try {
                     ResultSet rs = conexion.executeQuery("SELECT usuario, contrasena, rol FROM usuarios WHERE usuario='" + usuario + "' AND contrasena=SHA2('"+ password + "', 256);");
                     if (rs.next()) {
-                        // El usuario y la contraseña son válidos
-                        System.out.println("SI!");
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("!!");
-                        alert.setHeaderText(null);
-                        alert.setContentText("ACCESO CONCEDIDO");
-                        alert.showAndWait();
-                        Stage stage = new Stage();
-                        try {
-                            Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
-                            Scene scene = new Scene(root);
-                            stage.setMaximized(true);
-                            Image imagenIcono = new Image(getClass().getResourceAsStream("assets/hospital-logo.png"));
-                            stage.getIcons().add(imagenIcono);
-                            stage.setScene(scene);
-                            stage.show();
-                            // Ocultar la ventana actual
-                            ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
-                            conexion.disconnect();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                        switch (rs.getString("rol")){
+                            case "Administrador" ->{
+                                System.out.println("ADMINISTRADOR");
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("!!");
+                                alert.setHeaderText(null);
+                                alert.setContentText("ACCESO CONCEDIDO");
+                                alert.showAndWait();
+                                Stage stage = new Stage();
+                                try {
+                                    Parent root = FXMLLoader.load(getClass().getResource("index-admin.fxml"));
+                                    Scene scene = new Scene(root);
+                                    stage.setMaximized(true);
+                                    Image imagenIcono = new Image(getClass().getResourceAsStream("assets/hospital-logo.png"));
+                                    stage.getIcons().add(imagenIcono);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    // Ocultar la ventana actual
+                                    ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+                                    conexion.disconnect();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            case "Recepcionista" ->{
+                                System.out.println("RECEPCIONISTA");
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("!!");
+                                alert.setHeaderText(null);
+                                alert.setContentText("ACCESO CONCEDIDO");
+                                alert.showAndWait();
+                                Stage stage = new Stage();
+                                try {
+                                    Parent root = FXMLLoader.load(getClass().getResource("recepcion-views/index-recepcion.fxml"));
+                                    Scene scene = new Scene(root);
+                                    stage.setMaximized(true);
+                                    Image imagenIcono = new Image(getClass().getResourceAsStream("assets/hospital-logo.png"));
+                                    stage.getIcons().add(imagenIcono);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    // Ocultar la ventana actual
+                                    ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+                                    conexion.disconnect();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            case "Medico" ->{
+                                System.out.println("RECEPCIONISTA");
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("!!");
+                                alert.setHeaderText(null);
+                                alert.setContentText("ACCESO CONCEDIDO");
+                                alert.showAndWait();
+                                Stage stage = new Stage();
+                                try {
+                                    Parent root = FXMLLoader.load(getClass().getResource("medicos-views/index-medicos.fxml"));
+                                    Scene scene = new Scene(root);
+                                    stage.setMaximized(true);
+                                    Image imagenIcono = new Image(getClass().getResourceAsStream("assets/hospital-logo.png"));
+                                    stage.getIcons().add(imagenIcono);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    // Ocultar la ventana actual
+                                    ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+                                    conexion.disconnect();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
                         }
+
                     } else {
                         // El usuario y/o la contraseña son incorrectos
                         Alert alert = new Alert(Alert.AlertType.WARNING);

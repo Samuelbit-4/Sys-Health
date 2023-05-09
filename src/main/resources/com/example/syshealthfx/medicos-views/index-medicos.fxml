@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="650.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.syshealthfx.MedicosController">
+   <children>
+      <VBox prefHeight="650.0" prefWidth="1280.0" stylesheets="@../styles.css">
+         <children>
+            <HBox prefHeight="650.0" prefWidth="1280.0">
+               <children>
+                  <VBox prefHeight="594.0" prefWidth="275.0" styleClass="vbox-citas-medico" stylesheets="@../styles.css">
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                     <children>
+                        <Label alignment="CENTER" prefHeight="51.0" prefWidth="275.0" text="CITAS AGENDADAS" />
+                        <VBox fx:id="citasHoy" prefHeight="200.0" prefWidth="100.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="650.0" prefWidth="1011.0">
+                     <children>
+                        <Label fx:id="txtInicio" alignment="CENTER" prefHeight="91.0" prefWidth="1010.0" styleClass="label-inicio-medico" text="BIENVENIDO">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="559.0" prefWidth="1008.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="559.0" prefWidth="471.0" stylesheets="@../styles.css">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="559.0" prefWidth="226.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="213.0" styleClass="btn-agendar" text="CONSULTAR PACIENTE SIN CITA" />
+                                       </children>
+                                    </HBox>
+                                    <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#cerrarSesion" prefHeight="55.0" prefWidth="141.0" styleClass="btn-agendar" text="CERRAR SESIÓN" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -185,13 +185,9 @@ public class UsersController implements Initializable {
                             System.out.println("Hola");
                             FileChooser fileChooser = new FileChooser();
                             fileChooser.setTitle("Seleccionar ubicación");
-
                             File initialDirectory = new File(System.getProperty("user.home"));
                             fileChooser.setInitialDirectory(initialDirectory);
-
                             File selectedDirectory = fileChooser.showSaveDialog(frameAdmin.getScene().getWindow());
-
-
                             if (selectedDirectory != null) {
                                 System.out.println("Ubicación seleccionada: " + selectedDirectory.getAbsolutePath());
                                 RegistroController reporte = new RegistroController();
@@ -253,9 +249,8 @@ public class UsersController implements Initializable {
                                     VBox contenedor = (VBox) actual.lookup("#tablaPacientes");
                                     actual.getChildren().remove(contenedor);
                                     actual.getChildren().add(tablaPacientes.mostrarTabla());
-
                                 } catch (IOException ese){
-
+                                    ese.printStackTrace();
                                 }
                             });
                         });
@@ -310,10 +305,6 @@ public class UsersController implements Initializable {
                                 es.printStackTrace();
                             }
                         });
-
-
-
-
                     }
                     case "btnLaboratorio" ->{
                         System.out.println("LABORATORIO");
