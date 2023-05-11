@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.sql.ResultSet;
@@ -16,7 +17,9 @@ import java.sql.SQLException;
 public class TablaUsuarios{
 
 
-    public TableView<Usuarios> mostrarTabla(){
+    public VBox mostrarTabla(){
+        VBox vBox = new VBox();
+        vBox.setId("tablaEmpleados");
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
         conexion.connect();
         TableView<Usuarios> table = new TableView<>();
@@ -53,15 +56,16 @@ public class TablaUsuarios{
             table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
             table.setItems(listaUsuarios);
 
+
             // Agregar las columnas a la TableView
             table.getColumns().addAll(idColumn, nombreColumn, apellidoPaternoColumn, apellidoMaternoColumn, departamentoColumn, usuarioColumn);
-
+            vBox.getChildren().add(table);
             conexion.disconnect();
             
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return table;
+        return vBox;
     }
 
 }

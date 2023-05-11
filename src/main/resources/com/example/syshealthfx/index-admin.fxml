@@ -28,16 +28,16 @@
                   </Label>
                   <VBox fx:id="botonesAside" alignment="TOP_CENTER" prefHeight="543.0" prefWidth="215.0" spacing="15.0">
                      <children>
-                        <Button id="btnInicio" alignment="BASELINE_LEFT" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="35.0" prefWidth="228.0" styleClass="btn-aside" text="INICIO">
+                        <Button id="btnInicio" alignment="BASELINE_LEFT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#btnInicio" prefHeight="35.0" prefWidth="228.0" styleClass="btn-aside" text="INICIO">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button id="btnDepartamentos" fx:id="usuario" mnemonicParsing="false" prefHeight="35.0" prefWidth="222.0" styleClass="btn-aside" text="DEPARTAMENTOS" />
-                        <Button id="btnPacientes" fx:id="btnPacientes" mnemonicParsing="false" prefHeight="35.0" prefWidth="228.0" styleClass="btn-aside" text="PACIENTES" />
-                        <Button id="btnLaboratorio" mnemonicParsing="false" prefHeight="35.0" prefWidth="223.0" styleClass="btn-aside" text="LABORATORIO" />
-                        <Button id="btnCitas" mnemonicParsing="false" prefHeight="35.0" prefWidth="229.0" styleClass="btn-aside" text="CITAS" />
-                        <Button id="btnCerrarSesion" mnemonicParsing="false" prefHeight="35.0" prefWidth="230.0" styleClass="btn-aside-cerrar" text="CERRAR SESIÓN" />
+                        <Button id="btnDepartamentos" fx:id="btnDepas" mnemonicParsing="false" onAction="#btnDepartamentos" prefHeight="35.0" prefWidth="222.0" styleClass="btn-aside" text="DEPARTAMENTOS" />
+                        <Button id="btnPacientes" fx:id="btnPacientes" mnemonicParsing="false" onAction="#btnPacientes" prefHeight="35.0" prefWidth="228.0" styleClass="btn-aside" text="PACIENTES" />
+                        <Button id="btnLaboratorio" fx:id="btnLabs" mnemonicParsing="false" onAction="#btnLaboratorio" prefHeight="35.0" prefWidth="223.0" styleClass="btn-aside" text="LABORATORIO" />
+                        <Button id="btnCitas" mnemonicParsing="false" onAction="#btnCitas" prefHeight="35.0" prefWidth="229.0" styleClass="btn-aside" text="CITAS" />
+                        <Button id="btnCerrarSesion" mnemonicParsing="false" onAction="#btnCerrar" prefHeight="35.0" prefWidth="230.0" styleClass="btn-aside-cerrar" text="CERRAR SESIÓN" />
                      </children>
                   </VBox>
                </children>
@@ -63,7 +63,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox fx:id="registrarUsuarioss" alignment="CENTER" onDragDetected="#btnRegistrarUsuarios" prefHeight="181.0" prefWidth="441.0" styleClass="panel-acceso">
+                        <HBox fx:id="registrarUsuarioss" alignment="CENTER" onMouseClicked="#btnRegistrarUsuarios" prefHeight="181.0" prefWidth="441.0" styleClass="panel-acceso">
                            <children>
                               <ImageView fitHeight="111.0" fitWidth="100.0">
                                  <image>
@@ -77,7 +77,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox fx:id="registrarDepartamento" prefHeight="100.0" prefWidth="200.0" styleClass="panel-acceso" GridPane.columnIndex="1">
+                        <HBox fx:id="registrarDepartamento" onMouseClicked="#btnRegistrarDepartamento" prefHeight="100.0" prefWidth="200.0" styleClass="panel-acceso" GridPane.columnIndex="1">
                            <children>
                               <ImageView fitHeight="54.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -91,7 +91,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox fx:id="buscarPaciente" prefHeight="226.0" prefWidth="507.0" styleClass="panel-acceso" GridPane.rowIndex="1">
+                        <HBox fx:id="buscarPaciente" onMouseClicked="#btnBuscarPaciente" prefHeight="226.0" prefWidth="507.0" styleClass="panel-acceso" GridPane.rowIndex="1">
                            <children>
                               <ImageView fitHeight="97.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

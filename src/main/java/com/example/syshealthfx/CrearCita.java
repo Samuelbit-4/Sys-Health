@@ -156,4 +156,8 @@ public class CrearCita implements Initializable {
         }
 
     }
+
+    public void generarPDFCita(){
+
+    }
 }

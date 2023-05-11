@@ -130,82 +130,13 @@ public class MedicosController implements Initializable {
                 }
                 citasHoy.getChildren().add(contenedorCita);
             }
-            while (rs.next()){
-                VBox citaC = new VBox();
-                citaC.setId("#contenedorCita");
-                citaC.getChildren().add(new Label(String.valueOf("ID: "+ rs.getLong("id_cita"))));
-                citaC.getChildren().add(new Label("FECHA - HORA : "+String.valueOf(rs.getTimestamp(2))));
-                citaC.getChildren().add(new Label("MEDICO: "+ rs.getString(6) + " " + rs.getString(7) + " " + rs.getString(8)));
-                citaC.getChildren().add(new Label("PACIENTE: " + rs.getString(10) + " " + rs.getString(11) + " " + rs.getString(12)));
-                contenedorCita.getStyleClass().add("contenedor-cita");
-                contenedorCita.setAlignment(Pos.TOP_CENTER);
-                contenedorCita.getChildren().add(citaC);
-                String paciente = String.valueOf(rs.getLong("id_paciente")) + " - " + rs.getString(10) + " " + rs.getString(11) + " " + rs.getString(12);
-                String medico = String.valueOf(rs.getLong("id_medico"))+ " - " + rs.getString(6) + " " + rs.getString(7) + " " + rs.getString(8);
-                long idCita = rs.getLong("id_cita");
-                citasHoy.getChildren().add(contenedorCita);
-                Citas citas = new Citas(
-                        rs.getLong(1),
-                        rs.getLong(4),
-                        rs.getTimestamp(2),
-                        rs.getString(3),
-                        rs.getString(6),
-                        rs.getLong(5),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getString(13),
-                        rs.getDate(14),
-                        rs.getString(6),
-                        rs.getLong(10)
-                );
-                citaC.setOnMouseClicked(event ->{
-                    if(event.getClickCount() == 2){
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("medicos-views/consulta-paciente.fxml"));
-                        try{
-                            Parent root = loader.load();
-                            ConsultaController consultaController = loader.getController();
-                            consultaController.setCitas(citas);
-                            Scene scene = new Scene(root);
-                            Stage stage = new Stage();
-                            stage.setScene(scene);
-                            stage.showAndWait();
-                            VBox cita = (VBox) event.getSource();
-                            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-                            alerta.setTitle("CITA");
-                            alerta.setHeaderText("¿MARCAR CITA COMPLETADA?");
-                            alerta.setContentText("¿Desa eliminar la descripción de la cita del carrete?");
-                            Optional<ButtonType> result = alerta.showAndWait();
-                            if (result.isPresent() && result.get() == ButtonType.OK){
-                                cita.setStyle("-fx-background-color: green; -fx-text-fill: white");
-                            }
-                        } catch (IOException e){
-                            e.printStackTrace();
-                        }
-                    }
-                    event.consume();
-                });
-            }
+
 
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
-    @FXML
-    public void consultarSinCita(){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("medicos-views/consulta-paciente.fxml"));
-        try {
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
+
     @FXML
     public void cerrarSesion(ActionEvent actionEvent){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

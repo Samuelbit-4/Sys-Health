@@ -14,8 +14,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -38,11 +40,21 @@ public class RecepcionController implements Initializable {
     private Label textInicio;
     @FXML
     private VBox contenidoInicio;
+    @FXML
+    private HBox registrarUsuario;
+    @FXML
+    private HBox buscarPaciente;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         textInicio.setText("BIENVENIDO: "+SesionUsuario.getUsuario());
+        registrarUsuario.setOnMouseClicked(event ->{
+            btnPacientes.fire();
+        });
+        buscarPaciente.setOnMouseClicked(event ->{
+            btnPacientes.fire();
+        });
     }
     @FXML
     public void mostrarInicio(ActionEvent actionEvent){
@@ -69,6 +81,7 @@ public class RecepcionController implements Initializable {
         VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
         HBox btnListaPacientes = (HBox) vn.lookup("#btnListaPacientes");
         HBox btnRegistrarPacientes = (HBox) vn.lookup("#btnRegistrarPaciente");
+        HBox btnGenerarPDF = (HBox) vn.lookup("#btnReportePacientes");
         btnListaPacientes.setOnMouseClicked((pacientes) ->{
             removerElementos();
             VBox actual = mostrarVentana("pacientes", "lista-pacientes");
@@ -152,6 +165,24 @@ public class RecepcionController implements Initializable {
                 es.printStackTrace();
             }
         });
+        btnGenerarPDF.setOnMouseClicked((pdf) ->{
+            RegistroPacientes registro = new RegistroPacientes();
+            HBox hbox = (HBox) pdf.getSource();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Seleccionar ubicación");
+            File initialDirectory = new File(System.getProperty("user.home"));
+            fileChooser.setInitialDirectory(initialDirectory);
+            File selectedDirectory = fileChooser.showSaveDialog(hbox.getScene().getWindow());
+            if (selectedDirectory != null) {
+                System.out.println("Ubicación seleccionada: " + selectedDirectory.getAbsolutePath());
+                registro.reporteCompleto(selectedDirectory.getAbsolutePath());
+                Alert aviso = new Alert(Alert.AlertType.INFORMATION);
+                aviso.setTitle("PDF CREADO CON EXITO");
+                aviso.setHeaderText("REPORTE GENERADO CON EXITO");
+                aviso.setContentText("El reporte a sido creado con éxito\nSe a guardado en: "+selectedDirectory.getAbsolutePath());
+                aviso.show();
+            }
+        });
     }
     @FXML
     public void ventanaCitas(){
@@ -166,6 +197,10 @@ public class RecepcionController implements Initializable {
             stage.setScene(scene);
             stage.setMaximized(true);
             stage.centerOnScreen();
+            stage.setResizable(false);
+            Image image = new Image(getClass().getResourceAsStream("assets/doctor.png"));
+            stage.getIcons().add(image);
+            stage.setTitle("CITAS");
             stageActual.hide();
             stage.showAndWait();
             stageActual.show();

@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ConsultaController implements Initializable {
@@ -193,6 +194,7 @@ public class ConsultaController implements Initializable {
                 guardarSinLab();
                 guardarSinReceta();
                 Stage stages = (Stage) btnCrearLab.getScene().getWindow();
+
                 stages.close();
             } catch (SQLException s) {
                 s.printStackTrace();
@@ -205,6 +207,8 @@ public class ConsultaController implements Initializable {
             alerta.showAndWait();
             try {
                 guardarSinReceta();
+                Alert alertas = new Alert(Alert.AlertType.CONFIRMATION);
+
                 Stage stages = (Stage) btnCrearLab.getScene().getWindow();
                 stages.close();
             } catch (SQLException s) {
@@ -218,6 +222,7 @@ public class ConsultaController implements Initializable {
             alerta.showAndWait();
             try {
                 guardarSinLab();
+
                 Stage stages = (Stage) btnCrearLab.getScene().getWindow();
                 stages.close();
             } catch (SQLException s) {
