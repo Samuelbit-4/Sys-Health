@@ -143,11 +143,6 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </Button>
-                                    <Button id="btnCancelar" mnemonicParsing="false" style="-fx-border-radius: 0; -fx-background-radius: 0; -fx-border-color: transparent transparent red transparent; -fx-border-width: 2px; -fx-font-weight: bold;" styleClass="btn-registro-cancelar" text="CANCELAR REGISTRO">
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </Button>
                                  </children>
                               </HBox>
                            </children>

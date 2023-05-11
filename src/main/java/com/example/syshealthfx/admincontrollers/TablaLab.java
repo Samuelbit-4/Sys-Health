@@ -1,6 +1,7 @@
 package com.example.syshealthfx.admincontrollers;
 
 import com.example.syshealthfx.SQLClass;
+import com.example.syshealthfx.SesionUsuario;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -8,7 +9,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.properties.TextAlignment;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
@@ -62,7 +63,7 @@ public class TablaLab {
         }
         return tablaLab;
     }
-    public void generarReporteLab(){
+    public void generarReporteLab(String name){
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
         conexion.connect();
         int count = 0;
@@ -78,16 +79,16 @@ public class TablaLab {
         }
         PdfWriter writer = null;
         try {
-            writer = new PdfWriter("reporte-lab.pdf");
+            writer = new PdfWriter(name+".pdf");
             PdfDocument pdfDocument = new PdfDocument(writer);
             PageSize pageSize = PageSize.A4;
             Document document = new Document(pdfDocument, pageSize);
 
             Text titulo = new Text("SYS-HEALTH\n").setFontSize(24).setBold();
-            document.add(new Paragraph().add(titulo).setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph().add(titulo));
 
-            Text subtitulo = new Text("REPORTE DE PRUEBAS DE LABORATORIO\n").setFontSize(12).setBold().setItalic().setFontColor(ColorConstants.LIGHT_GRAY).setTextAlignment(TextAlignment.CENTER);
-            document.add(new Paragraph().add(subtitulo).setTextAlignment(TextAlignment.CENTER).setFontColor(ColorConstants.LIGHT_GRAY));
+            Text subtitulo = new Text("REPORTE DE PRUEBAS DE LABORATORIO\n").setFontSize(12).setBold().setItalic().setFontColor(ColorConstants.LIGHT_GRAY);
+            document.add(new Paragraph().add(subtitulo).setFontColor(ColorConstants.LIGHT_GRAY));
             Text contenido1 = new Text("A quien corresponda: \n");
 
             Text contenido2 = new Text("Espero que esta carta lo/la encuentre bien. Me dirijo a usted para informarle sobre el número de pruebas de laboratorio que hemos registrado y " +
@@ -99,14 +100,14 @@ public class TablaLab {
 
             Text contenido4 = new Text("Aprovecho esta oportunidad para agradecerle por su confianza en nosotros. Nos comprometemos a continuar brindando servicios de alta calidad y excelencia en la atención médica a todos nuestros pacientes." +
                     "\n");
-            Text contenido5 = new Text("Atentamente: ");
+            Text contenido5 = new Text("Atentamente: "+ SesionUsuario.getUsuario());
 
-            document.add(new Paragraph().add(subtitulo).setTextAlignment(TextAlignment.JUSTIFIED));
-            document.add(new Paragraph().add(contenido1).setTextAlignment(TextAlignment.JUSTIFIED));
-            document.add(new Paragraph().add(contenido2).setTextAlignment(TextAlignment.JUSTIFIED));
-            document.add(new Paragraph().add(contenido3).setTextAlignment(TextAlignment.JUSTIFIED));
-            document.add(new Paragraph().add(contenido4).setTextAlignment(TextAlignment.JUSTIFIED));
-            document.add(new Paragraph().add(contenido5).setTextAlignment(TextAlignment.JUSTIFIED));
+            document.add(new Paragraph().add(subtitulo));
+            document.add(new Paragraph().add(contenido1));
+            document.add(new Paragraph().add(contenido2));
+            document.add(new Paragraph().add(contenido3));
+            document.add(new Paragraph().add(contenido4));
+            document.add(new Paragraph().add(contenido5));
             document.close();
 
             System.out.println("ya");

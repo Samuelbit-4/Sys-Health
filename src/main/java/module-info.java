@@ -9,10 +9,8 @@ module com.example.syshealthfx {
 
     requires layout;
     requires kernel;
+    requires html2pdf;
 
-    requires org.bouncycastle.pkix;
-    requires org.bouncycastle.provider;
-    requires org.bouncycastle.util;
 
     requires com.google.protobuf;
     requires org.joda.time;
@@ -20,7 +18,8 @@ module com.example.syshealthfx {
     requires com.calendarfx.recurrence;
 
     requires jfxtras.controls;
-
+    requires javafx.web;
+    requires svg;
 
     opens com.example.syshealthfx to javafx.fxml;
     exports com.example.syshealthfx;

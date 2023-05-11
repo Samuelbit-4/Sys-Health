@@ -48,15 +48,13 @@ public class UsersController implements Initializable {
     @FXML
     private Button usuario;
     @FXML
-    private Button btnInicio;
+    private HBox registrarUsuarioss;
+    @FXML
+    private HBox registrarDepartamento;
+    @FXML
+    private HBox buscarPaciente;
     @FXML
     private Button btnPacientes;
-    @FXML
-    private Button btnLaboratorio;
-    @FXML
-    private Button btnCitas;
-    @FXML
-    private Button btnCerrarSesion;
     @FXML
     private HBox contenidoHBox;
     @FXML
@@ -222,6 +220,7 @@ public class UsersController implements Initializable {
                         VBox vn = (VBox) contenidoHBox.lookup("#contenidoInicio");
                         HBox btnListaPacientes = (HBox) vn.lookup("#btnListaPacientes");
                         HBox btnRegistrarPacientes = (HBox) vn.lookup("#btnRegistrarPaciente");
+                        HBox btnGenerarPDF = (HBox) vn.lookup("#btnReportePacientes");
                         btnListaPacientes.setOnMouseClicked((pacientes) ->{
                             removerElementos();
                             VBox actual = mostrarVentana("pacientes", "lista-pacientes");
@@ -282,7 +281,6 @@ public class UsersController implements Initializable {
                                 TextField txtTelefono = (TextField) vn1.lookup("#txtTelefono");
                                 TextField txtCorreo = (TextField) vn1.lookup("#txtCorreo");
                                 DatePicker txtFecha = (DatePicker) vn1.lookup("#txtFecha");
-
                                 Button btnRegistrar = (Button) vn1.lookup("#btnRegistrar");
                                 Button btnCancelar = (Button) vn1.lookup("#btnCancelar");
                                 RadioButton selected = (RadioButton) genero.getSelectedToggle();
@@ -305,6 +303,24 @@ public class UsersController implements Initializable {
                                 es.printStackTrace();
                             }
                         });
+                        btnGenerarPDF.setOnMouseClicked((pdf) ->{
+                            RegistroPacientes registro = new RegistroPacientes();
+                            HBox hbox = (HBox) pdf.getSource();
+                            FileChooser fileChooser = new FileChooser();
+                            fileChooser.setTitle("Seleccionar ubicación");
+                            File initialDirectory = new File(System.getProperty("user.home"));
+                            fileChooser.setInitialDirectory(initialDirectory);
+                            File selectedDirectory = fileChooser.showSaveDialog(hbox.getScene().getWindow());
+                            if (selectedDirectory != null) {
+                                System.out.println("Ubicación seleccionada: " + selectedDirectory.getAbsolutePath());
+                                registro.reporteCompleto(selectedDirectory.getAbsolutePath());
+                                Alert aviso = new Alert(Alert.AlertType.INFORMATION);
+                                aviso.setTitle("PDF CREADO CON EXITO");
+                                aviso.setHeaderText("REPORTE GENERADO CON EXITO");
+                                aviso.setContentText("El reporte a sido creado con éxito\nSe a guardado en: "+selectedDirectory.getAbsolutePath());
+                                aviso.show();
+                            }
+                        });
                     }
                     case "btnLaboratorio" ->{
                         System.out.println("LABORATORIO");
@@ -324,8 +340,22 @@ public class UsersController implements Initializable {
 
                         });
                         btnGenerarReportePrueba.setOnMouseClicked((reporte) ->{
+                            HBox hbox = (HBox) reporte.getSource();
                             TablaLab reportepdf = new TablaLab();
-                            reportepdf.generarReporteLab();
+                            FileChooser fileChooser = new FileChooser();
+                            fileChooser.setTitle("Seleccionar ubicación");
+                            File initialDirectory = new File(System.getProperty("user.home"));
+                            fileChooser.setInitialDirectory(initialDirectory);
+                            File selectedDirectory = fileChooser.showSaveDialog(hbox.getScene().getWindow());
+                            if (selectedDirectory != null) {
+                                System.out.println("Ubicación seleccionada: " + selectedDirectory.getAbsolutePath());
+                                reportepdf.generarReporteLab(selectedDirectory.getAbsolutePath());
+                                Alert aviso = new Alert(Alert.AlertType.INFORMATION);
+                                aviso.setTitle("PDF CREADO CON EXITO");
+                                aviso.setHeaderText("REPORTE GENERADO CON EXITO");
+                                aviso.setContentText("El reporte a sido creado con éxito\nSe a guardado en: "+selectedDirectory.getAbsolutePath());
+                                aviso.show();
+                            }
                         });
 
                     }

@@ -19,8 +19,11 @@ public class Citas {
     private String apellidoPPaciente;
     private String apellidoMPaciente;
     private Date fechaNacimiento;
+    private String cedulaMedico;
+    private long idPaciente;
 
-    public Citas(long idCita, long idMedico, Date fechaHora, String descripcion, String cedula, long idEmpleado, String nombreMedico, String apellidoPMedico, String apellidoMMedico, String nombrePaciente, String apellidoPPaciente, String apellidoMPaciente, Date fechaNacimiento) {
+
+    public Citas(long idCita, long idMedico, Date fechaHora, String descripcion, String cedula, long idEmpleado, String nombreMedico, String apellidoPMedico, String apellidoMMedico, String nombrePaciente, String apellidoPPaciente, String apellidoMPaciente, Date fechaNacimiento, String cedulaMedico, long idPaciente) {
         this.idCita = idCita;
         this.idMedico = idMedico;
         this.fechaHora = fechaHora;
@@ -34,6 +37,24 @@ public class Citas {
         this.apellidoPPaciente = apellidoPPaciente;
         this.apellidoMPaciente = apellidoMPaciente;
         this.fechaNacimiento = fechaNacimiento;
+        this.cedulaMedico = cedulaMedico;
+        this.idPaciente = idPaciente;
+    }
+
+    public long getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(long idPaciente) {
+        this.idPaciente = idPaciente;
+    }
+
+    public String getCedulaMedico() {
+        return cedulaMedico;
+    }
+
+    public void setCedulaMedico(String cedulaMedico) {
+        this.cedulaMedico = cedulaMedico;
     }
 
     public long getIdCita() {
@@ -138,5 +159,11 @@ public class Citas {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+    public String getNombreCompletoPaciente(){
+       return nombrePaciente + " " + apellidoPPaciente + " " + apellidoMPaciente;
+    }
+    public String getNombreCompletoMedico(){
+        return nombreMedico + " " + apellidoPMedico + " " + apellidoMMedico;
     }
 }

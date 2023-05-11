@@ -8,14 +8,17 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Text;
-import com.itextpdf.layout.properties.TextAlignment;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 
 import javax.xml.transform.Result;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -113,13 +116,13 @@ public class RegistroPacientes {
 
         Document document = new Document(pdfDocument, pageSize);
         // Creamos un objeto Text con el título centrado
-        Text titulo = new Text("SYS-HEALTH\n").setFontSize(24).setBold().setTextAlignment(TextAlignment.CENTER);
+        Text titulo = new Text("SYS-HEALTH\n").setFontSize(24).setBold();
 
         // Agregamos el título al documento
         document.add(new Paragraph(titulo));
 
         // Creamos un objeto Text con el segundo título centrado y con color rojo
-        Text subtitulo = new Text("REPORTE DE CREACIÓN DE PACIENTE\nCLAVE DE PACIENTE: "+idPaciente).setFontSize(12).setBold().setItalic().setFontColor(ColorConstants.LIGHT_GRAY).setTextAlignment(TextAlignment.CENTER);
+        Text subtitulo = new Text("REPORTE DE CREACIÓN DE PACIENTE\nCLAVE DE PACIENTE: "+idPaciente).setFontSize(12).setBold().setItalic().setFontColor(ColorConstants.LIGHT_GRAY);
 
         // Agregamos el segundo título al documento
         document.add(new Paragraph(subtitulo));
@@ -163,9 +166,67 @@ public class RegistroPacientes {
         Alert alertAviso = new Alert(Alert.AlertType.INFORMATION);
         alertAviso.setTitle("PDF EXITOSO");
         alertAviso.setHeaderText("PDF CREADO CON EXITO");
-        alertAviso.setContentText("El PDF se a generado con exito, se encuentra en la ubicación:\n");
+        alertAviso.setContentText("El PDF se a generado con exito, se encuentra en la raiz del sistema");
         alertAviso.show();
     }
 
+    public void reporteCompleto(String name){
+        SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
+        conexion.connect();
+        int count = 0;
+
+        try{
+            ResultSet rs = conexion.executeQuery("SELECT COUNT(*) FROM pacientes");
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+            conexion.disconnect();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        conexion.connect();
+
+
+        PdfWriter writer = null;
+        try {
+
+            writer = new PdfWriter(name+".pdf");
+            PdfDocument pdfDocument = new PdfDocument(writer);
+            PageSize pageSize = PageSize.A4;
+            Document document = new Document(pdfDocument, pageSize);
+
+            Text titulo = new Text("SYS-HEALTH\n").setFontSize(24).setBold();
+            document.add(new Paragraph().add(titulo));
+
+            Text subtitulo = new Text("REPORTE DE CREACIÓN DE PACIENTES\n").setFontSize(12).setBold().setItalic().setFontColor(ColorConstants.LIGHT_GRAY);
+            document.add(new Paragraph().add(subtitulo).setFontColor(ColorConstants.LIGHT_GRAY));
+            Text contenido1 = new Text("A quien corresponda: \n");
+
+            Text contenido2 = new Text("Espero que esta carta lo/la encuentre bien. Me dirijo a usted para informarle sobre el número de pacientes que hemos registrado y " +
+                    "ordenado en nuestro sistema.\n");
+
+            Text contenido3 = new Text("Me complace informarle que hemos registrado y ordenado " + count +
+                    " nuevas cuentas para pacientes en el último mes. Este es un testimonio del arduo trabajo y dedicación de " +
+                    "nuestro equipo para proporcionar los mejores servicios de atención médica a nuestros pacientes.\n");
+
+            Text contenido4 = new Text("Aprovecho esta oportunidad para agradecerle por su confianza en nosotros. Nos comprometemos a continuar brindando servicios de alta calidad y excelencia en la atención médica a todos nuestros pacientes." +
+                    "\n");
+            Text contenido5 = new Text("Atentamente: "+SesionUsuario.getUsuario());
+
+            document.add(new Paragraph().add(subtitulo));
+            document.add(new Paragraph().add(contenido1));
+            document.add(new Paragraph().add(contenido2));
+            document.add(new Paragraph().add(contenido3));
+            document.add(new Paragraph().add(contenido4));
+            document.add(new Paragraph().add(contenido5));
+            document.close();
+
+            System.out.println("ya");
+
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -16,7 +16,6 @@
         </HBox>
         <HBox alignment="CENTER_LEFT" prefHeight="109.0" prefWidth="1069.0" spacing="15.0">
             <children>
-                <Button id="btnBack" mnemonicParsing="false" text="REGRESAR" />
                 <VBox prefHeight="109.0" prefWidth="905.0">
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
