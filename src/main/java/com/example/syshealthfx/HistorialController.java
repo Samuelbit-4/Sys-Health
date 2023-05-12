@@ -1,6 +1,5 @@
 package com.example.syshealthfx;
 
-import com.example.syshealthfx.admincontrollers.Historial;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -15,7 +14,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class HistorialController implements Initializable{
-    Historial historial;
     @FXML
     private Label fecha;
     @FXML

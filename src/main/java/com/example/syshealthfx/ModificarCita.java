@@ -3,6 +3,7 @@ package com.example.syshealthfx;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.w3c.dom.Text;
 
 import java.net.URL;
@@ -51,7 +52,6 @@ public class ModificarCita implements Initializable {
         asignarHorasMedico(medico);
         this.idCita = idCita;
     }
-
     @FXML
     public void modificarCita() {
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
@@ -80,44 +80,67 @@ public class ModificarCita implements Initializable {
             ps.setLong(4, idCita);
             ps.executeUpdate();
             System.out.println("YAAA CITA");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("CITA MODIFICADA");
+            alert.setHeaderText("CITA MODIFICADA CON ÉXITO");
+            alert.setContentText("La cita se ha modificado con éxito");
+            alert.showAndWait();
+            Stage stage = (Stage) seleccionarDia.getScene().getWindow();
+            stage.close();
             conexion.disconnect();
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
     @FXML
-    public void borrarCita(){
+    public void borrarCita() throws SQLException {
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
         conexion.connect();
-        try{
-            String query = "DELETE FROM citas WHERE id_cita=?";
-            PreparedStatement st = conexion.preparedStatement(query);
-            st.setLong(1, idCita);
-            int filasAfectadas = 0;
+        try {
+            conexion.setAutoCommit(false); // Habilita el control de transacciones
+
+            // Eliminar las filas en la tabla "recetas" que hacen referencia a la fila en la tabla "citas"
+            String queryRecetas = "DELETE FROM recetas WHERE id_cita=?";
+            PreparedStatement stRecetas = conexion.preparedStatement(queryRecetas);
+            stRecetas.setLong(1, idCita);
+            int filasAfectadasRecetas = stRecetas.executeUpdate();
+
+            // Eliminar la fila en la tabla "citas"
+            String queryCitas = "DELETE FROM citas WHERE id_cita=?";
+            PreparedStatement stCitas = conexion.preparedStatement(queryCitas);
+            stCitas.setLong(1, idCita);
+            int filasAfectadasCitas = 0;
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("ELIMINACIÓN...");
             alert.setHeaderText("¿ESTA SEGURO DE ELIMINAR LA CITA?");
             alert.setContentText("Esta accion no puede ser deshecha");
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == ButtonType.OK){
-                filasAfectadas = st.executeUpdate();
-                if(filasAfectadas == 1){
+            if(result.isPresent() && result.get() == ButtonType.OK) {
+                filasAfectadasCitas = stCitas.executeUpdate();
+                if(filasAfectadasCitas == 1 && filasAfectadasRecetas >= 0) {
+                    conexion.commit(); // Confirma la transacción
                     Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                     alert1.setTitle("Éxito");
                     alert1.setHeaderText("Cita eliminada con éxito");
                     alert1.showAndWait();
-                } else{
+                    Stage stage = (Stage) seleccionarDia.getScene().getWindow();
+                    stage.close();
+                } else {
+                    conexion.rollback(); // Revierte la transacción
                     Alert alert3 = new Alert(Alert.AlertType.WARNING);
                     alert3.setTitle("Error");
                     alert3.setHeaderText("No se pudo eliminar la cita");
                     alert3.showAndWait();
                 }
             }
-
-
-        } catch (SQLException e){
+        } catch(SQLException e) {
+            conexion.rollback(); // Revierte la transacción
             e.printStackTrace();
+        } finally {
+            conexion.setAutoCommit(true); // Restaura el control de transacciones a su valor predeterminado
+            conexion.disconnect();
         }
+
     }
     public void asignarHorasMedico(String medico){
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");

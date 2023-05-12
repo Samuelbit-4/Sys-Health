@@ -1,8 +1,6 @@
 package com.example.syshealthfx;
 
 import com.example.syshealthfx.admincontrollers.Citas;
-import com.example.syshealthfx.admincontrollers.Historial;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,12 +16,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ConsultaController implements Initializable {
     Citas citas;
-    Historial historial;
     @FXML
     private TextField nombrePaciente;
     @FXML
@@ -54,7 +50,6 @@ public class ConsultaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        btnGuardar.setDisable(true);
         descripcion.setOnKeyReleased(event ->{
             if(descripcion.getText().isEmpty()){
                 btnGuardar.setDisable(true);
@@ -77,19 +72,11 @@ public class ConsultaController implements Initializable {
         idMedicoR = citas.getIdMedico();
         idCitaR = citas.getIdCita();
     }
-    public void sinCita(long idCitas, Date fechas, String cedulas, String nombreMedicos){
-        nombreMedico.setText(nombreMedicos);
-        idCita.setText(String.valueOf(idCitas));
-        fecha.setText(String.valueOf(fechas));
-        cedula.setText(cedulas);
-        
-    }
-
     public void listaHistorial(String idPaciente){
         SQLClass conexion = new SQLClass("root", "", "sys_health_prueba");
         conexion.connect();
         try{
-            String query = "SELECT * FROM historial_medico WHERE id_paciente="+idPaciente;
+            String query = "SELECT * FROM historial_medico WHERE id_paciente="+idPaciente+"";
             ResultSet rs = conexion.executeQuery(query);
             while (rs.next()){
                 System.out.println(rs.getDate("fecha"));
@@ -160,7 +147,6 @@ public class ConsultaController implements Initializable {
             stage.setScene(scene);
             stage.showAndWait();
             btnCrearReceta.setDisable(true);
-
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -193,6 +179,7 @@ public class ConsultaController implements Initializable {
             try {
                 guardarSinLab();
                 guardarSinReceta();
+                guardarHistorial();
                 Stage stages = (Stage) btnCrearLab.getScene().getWindow();
 
                 stages.close();
@@ -207,8 +194,8 @@ public class ConsultaController implements Initializable {
             alerta.showAndWait();
             try {
                 guardarSinReceta();
+                guardarHistorial();
                 Alert alertas = new Alert(Alert.AlertType.CONFIRMATION);
-
                 Stage stages = (Stage) btnCrearLab.getScene().getWindow();
                 stages.close();
             } catch (SQLException s) {
@@ -222,12 +209,16 @@ public class ConsultaController implements Initializable {
             alerta.showAndWait();
             try {
                 guardarSinLab();
-
+                guardarHistorial();
                 Stage stages = (Stage) btnCrearLab.getScene().getWindow();
                 stages.close();
             } catch (SQLException s) {
                 s.printStackTrace();
             }
+        } else if(btnCrearLab.isDisable() && btnCrearReceta.isDisable()){
+            guardarHistorial();
+            Stage stages = (Stage) btnCrearLab.getScene().getWindow();
+            stages.close();
         }
 
     }

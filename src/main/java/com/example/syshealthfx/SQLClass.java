@@ -47,5 +47,15 @@ public class SQLClass {
         PreparedStatement pstmt = this.conn.prepareStatement(query);
         return pstmt;
     }
+    
+    public void commit() throws SQLException{
+        conn.commit();
+    }
+    public void rollback() throws SQLException{
+        conn.rollback();
+    }
+    public void setAutoCommit(boolean autoCommit) throws SQLException{
+        conn.setAutoCommit(autoCommit);
+    }
 
 }

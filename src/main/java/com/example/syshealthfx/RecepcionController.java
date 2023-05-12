@@ -208,7 +208,6 @@ public class RecepcionController implements Initializable {
             e.printStackTrace();
         }
     }
-
     @FXML
     public void cerrarSesionEvent(ActionEvent actionEvent){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -247,7 +246,6 @@ public class RecepcionController implements Initializable {
         }
 
     }
-
     public VBox mostrarVentana(String nombre, String nombreArchivo){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("admin-views/"+nombre+"/"+nombreArchivo+".fxml"));
